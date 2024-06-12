@@ -4,6 +4,8 @@ import Sidebar from '../../../components/Generate/Sidebar';
 import DocEditor from '../../../components/Generate/DocEditor'
 import Footer from '../../../components/Generate/Footer';
 
+import { contentImprover } from '../../../redux/template/content';
+
 import ContentImprover from '../../../components/Generate/ContentImprover';
 import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
@@ -20,7 +22,7 @@ export default function Index() {
     const {contents} = data
 
     if(!contents){
-      dispatch(openSnackBar({ message: "Please Input the Contents!", status: 'error' }));
+      dispatch(openSnackBar({ message: t("msg_please_input_contents"), status: 'error' }));
       return false;
     }
     return true;
@@ -33,6 +35,19 @@ export default function Index() {
       const { contents, tone } = data;
       console.log("contents", contents)
       console.log("tone", tone)
+
+      const sendData = {
+        action:"create",
+        output:count,
+        templateId:"content-improver",
+        values:{
+          textarea1:contents,
+          tone:"Friendly"
+        }	
+      }
+
+      let res = dispatch(contentImprover(sendData));
+      console.log("res", res);
     }
 
   }
@@ -48,8 +63,8 @@ export default function Index() {
           <div className='grid grid-cols-5'>
             <div className='col-span-3 border-gray-300' style={{borderRightWidth: "1px"}}>
               <Header 
-                title="Content Improver"
-                content="Take a piece of content and rewrite it to make it more interesting, creative, and engaging."
+                title={t("content_improver")}
+                content={t("content_improver_intro")}
               />
               <ContentImprover 
                 func_SetContents={setContents}
