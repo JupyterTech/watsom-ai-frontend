@@ -1,0 +1,75 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { openSnackBar } from "../../snackBarReducer";
+
+import { blogService } from '../../../services/blog.service'
+
+export const blogSlice = createSlice({
+    name: "blog",
+    initialState: {
+        generateOutlineState: false,
+        generateOneOutlineState: false,
+        outline: [],
+        oneOutline: "",
+    },
+    reducers: {
+        generateOutlineRequest: state => {
+            state.generateOutlineState = true
+        },
+        generateOutlineSuccess: (state, action) => {
+            state.generateOutlineState = false;
+            state.outline = action.payload.result;
+        },
+        generateOutlineFailed: (state, action) => {
+            state.generateOutlineState = false;
+        },
+        generateOneOutlineRequest: state => {
+            state.generateOneOutlineState = true
+        },
+        generateOneOutlineSuccess: (state, action) => {
+            state.generateOneOutlineState = false;
+            state.outline = action.payload.result;
+        },
+        generateOneOutlineFailed: (state, action) => {
+            state.generateOneOutlineState = false;
+        },
+    }
+});
+
+const {
+    generateOutlineFailed, generateOutlineRequest, generateOutlineSuccess,
+    generateOneOutlineFailed, generateOneOutlineRequest, generateOneOutlineSuccess
+} = blogSlice.actions;
+
+export const generateOutline = (data) => async (dispatch) => {
+
+    dispatch(generateOutlineRequest());
+
+    try {
+        var payload = await blogService.generateOutline(data);
+        dispatch(generateOutlineSuccess(payload));
+        return payload;
+    } catch (error) {
+        dispatch(generateOutlineFailed());
+        dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return false;
+    }
+}
+
+export const generateOneOutline = (data) => async (dispatch) => {
+
+    dispatch(generateOneOutlineRequest());
+
+    try {
+        var payload = await blogService.generateOneOutline(data);
+        dispatch(generateOneOutlineSuccess(payload));
+        return payload;
+    } catch (error) {
+        dispatch(generateOneOutlineFailed());
+        dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return false;
+    }
+}
+
+export default blogSlice.reducer;
