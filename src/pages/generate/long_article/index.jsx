@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { lazy, useState } from 'react';
 import Header from '../../../components/Generate/Header';
 import Sidebar from '../../../components/Generate/Sidebar';
 import DocEditor from '../../../components/Generate/DocEditor'
@@ -7,9 +7,14 @@ import Footer from '../../../components/Generate/Footer';
 import LongArticle from '../../../components/Generate/LongArticle';
 import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { generateLongArticle } from '../../../redux/template/blog';
+import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
 
 export default function Index() {
+  const { blogState, globalState } = useSelector((state) => state);
+  const { generateLongArticleState } = blogState;
+  const { loading } = globalState;
   const { t } = useTranslation();
 
   const [title, setTitle] = useState("");
@@ -29,54 +34,78 @@ export default function Index() {
     }else if(!keywords){
       dispatch(openSnackBar({ message: t("msg_please_input_keywords"), status: 'error' }));
       return false;
-    }else{
-      if(outline){
-        if(outline.length > 0){
-          let cnt_outline = 0
-          outline.map(data=>{
-            if(data)
-              cnt_outline ++
-          })
-
-          if(cnt_outline == 0){
-            dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
-            return false;    
-          }
-        }else{
-          dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
-          return false;  
-        }
-      }else{
-        dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
-        return false;
-      }
     }
+    // else{
+    //   if(outline){
+    //     if(outline.length > 0){
+    //       let cnt_outline = 0
+    //       outline.map(data=>{
+    //         if(data)
+    //           cnt_outline ++
+    //       })
+
+    //       if(cnt_outline == 0){
+    //         dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
+    //         return false;    
+    //       }
+    //     }else{
+    //       dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
+    //       return false;  
+    //     }
+    //   }else{
+    //     dispatch(openSnackBar({ message: t("msg_please_input_outline"), status: 'error' }));
+    //     return false;
+    //   }
+    // }
     return true;
   }
 
-  const generate = (data, count, type) => {
-    let is_valid = validate(data);
-
-    if(is_valid){
-      const { title, keywords, outline, tone } = data;
-      const formData = new FormData();
-      
-      let customized_outline = []
-      outline.map(data=>{
-        if(data){
-          customized_outline = [...customized_outline, data]
+  const generate = async (data, count, type) => {
+    if(!loading){
+      let is_valid = validate(data);
+  
+      if(is_valid){
+        dispatch(setLoading(true));
+        const { title, keywords, outline, tone } = data;
+        
+        const sendData = {
+          title:title,
+          keywords:keywords,
+          tone:tone,
+          outline:outline,
+          count:count,
+          type:type
         }
-      })
+  
+        let res = await dispatch(generateLongArticle(sendData));
+        if(res != false){
+          dispatch(setLoading(false));
+          console.log("res", res);
+          // setResult(res.result)
+          const {intro, conclusion, outline_content} = res
+          let content = "# " + title + "\n"
+          content += "## Introduction\n"
+          content += intro + "\n";
 
-      formData.append("title", title);
-      formData.append("keywords", keywords);
-      formData.append("tone", tone);
-      formData.append("outline", JSON.stringify(customized_outline));
-      formData.append("count", count);
-      formData.append("type", type);
+          if(outline.length > 0){
+            if(outline_content.length > 0){
+              outline_content.map((data, index)=>{
+                content += "## " + outline[index] + "\n"
+                content += data + "\n"
+              })
+            }
+          }
 
+          content += "## Conclusion\n"
+          content += conclusion;
+
+          dispatch(setCurrentDocument(content))
+        }else{
+          dispatch(setLoading(false));
+          dispatch(openSnackBar({ message: "Server Connection Error", status: 'error' }));
+        }
+      }
     }
-
   }
 
   return (
@@ -103,16 +132,15 @@ export default function Index() {
                 type = "long_article"
                 data = {{title: title, keywords: keywords, tone: tone, outline: [...outline, firstOutline]}}
                 generate = {generate}
+                count_disable = {true}
               />
             </div>
             <div className='col-span-2'>
               <DocEditor />
             </div>
           </div>
-
         </div>
       </div>
-
-  </div>
+    </div>
   );
 }
