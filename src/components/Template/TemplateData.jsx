@@ -56,6 +56,14 @@ export const templateData = [
     "group": "2"
   },
   {
+    "title": "blog_seo_title_meta_description",
+    "content": "blog_seo_title_meta_description_content",
+    "link": "blog_seo_title_meta_description",
+    "icon": "blog",
+    "search": "",
+    "group": "2"
+  },
+  {
     "title": "amazon_product_feature",
     "content": "amazon_product_feature_content",
     "link": "amazon_product_feature",
@@ -107,6 +115,14 @@ export const templateData = [
     "title": "photo_post_caption",
     "content": "photo_post_caption_content",
     "link": "photo_post_caption",
+    "icon": "social_media",
+    "search": "",
+    "group": "5"
+  },
+  {
+    "title": "opinion_piece_column",
+    "content": "opinion_piece_column_content",
+    "link": "opinion_piece_column",
     "icon": "social_media",
     "search": "",
     "group": "5"

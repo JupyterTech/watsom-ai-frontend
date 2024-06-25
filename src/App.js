@@ -5,6 +5,7 @@ import LongArticle from './pages/generate/blog/long_article'
 import ContentImprover from './pages/generate/blog/content_improver';
 import BlogIdeaOutlinePage from './pages/generate/blog/blog_idea_outline';
 import BlogIntroParagraphPage from './pages/generate/blog/blog_intro_paragraph';
+import BlogSeoTitleMetaDescriptionPage from './pages/generate/blog/blog_seo_title_meta_description';
 
 import YoutubeDescription from './pages/generate/youtube/youtube_description';
 import YoutubeHookIntroduction from './pages/generate/youtube/youtube_hook_introduction';
@@ -12,6 +13,7 @@ import YoutubeTitle from './pages/generate/youtube/youtube_title';
 
 import PinterestTitleDescriptionPage from './pages/generate/social_media/pinterest_title_description';
 import PhotoPostCaptionPage from './pages/generate/social_media/photo_post_caption';
+import OpinionPieceColumnPage from './pages/generate/social_media/opinion_piece_column';
 
 import AmazonProductFeaturePage from './pages/generate/amazon/amazon_product_feature';
 import AmazonProductTitlePage from './pages/generate/amazon/amazon_product_title';
@@ -38,6 +40,7 @@ function App() {
         <Route path = "/template/content_improver" element = {<ContentImprover/>} />
         <Route path = "/template/blog_idea_outline" element = {<BlogIdeaOutlinePage/>} />
         <Route path = "/template/blog_intro_paragraph" element = {<BlogIntroParagraphPage/>} />
+        <Route path = "/template/blog_seo_title_meta_description" element = {<BlogSeoTitleMetaDescriptionPage/>} />
 
         <Route path = "/template/youtube_description" element = {<YoutubeDescription/>} />
         <Route path = "/template/youtube_introduction" element = {<YoutubeHookIntroduction/>} />
@@ -45,6 +48,7 @@ function App() {
         
         <Route path = "/template/pinterest_title_description" element = {<PinterestTitleDescriptionPage/>} />
         <Route path = "/template/photo_post_caption" element = {<PhotoPostCaptionPage/>} />
+        <Route path = "/template/opinion_piece_column" element = {<OpinionPieceColumnPage/>} />
         
         <Route path = "/template/amazon_product_feature" element = {<AmazonProductFeaturePage/>} />
         <Route path = "/template/amazon_product_title" element = {<AmazonProductTitlePage/>} />

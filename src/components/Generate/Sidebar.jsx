@@ -232,6 +232,7 @@ function Sidebar({
               <TreeItem nodeId="blog_2" label={<div className={`${pathname.includes('content_improver') && "bg-site_light-100"} text-sm`}>{t("content_improver")}</div>} onClick={() => selectTemplate("blog",'/template/content_improver')} />
               <TreeItem nodeId="blog_3" label={<div className={`${pathname.includes('blog_idea_outline') && "bg-site_light-100"} text-sm`}>{t("blog_idea_outline")}</div>} onClick={() => selectTemplate("blog",'/template/blog_idea_outline')} />
               <TreeItem nodeId="blog_4" label={<div className={`${pathname.includes('blog_intro_paragraph') && "bg-site_light-100"} text-sm`}>{t("blog_intro_paragraph")}</div>} onClick={() => selectTemplate("blog",'/template/blog_intro_paragraph')} />
+              <TreeItem nodeId="blog_5" label={<div className={`${pathname.includes('blog_seo_title_meta_description') && "bg-site_light-100"} text-sm`}>{t("blog_seo_title_meta_description")}</div>} onClick={() => selectTemplate("blog",'/template/blog_seo_title_meta_description')} />
             </TreeItem>
             <TreeItem nodeId="amazon" label={t("group_amazon")}>
               <TreeItem nodeId="amazon_1" label={<div className={`${pathname.includes('amazon_product_feature') && "bg-site_light-100"} text-sm`}>{t("amazon_product_feature")}</div>} onClick={() => selectTemplate("amazon",'/template/amazon_product_feature')} />
@@ -245,6 +246,7 @@ function Sidebar({
             <TreeItem nodeId="social_media" label={t("group_social_media")}>
               <TreeItem nodeId="social_media_1" label={<div className={`${pathname.includes('pinterest_title_description') && "bg-site_light-100"} text-sm`}>{t("pinterest_title_description")}</div>} onClick={() => selectTemplate("social_media",'/template/pinterest_title_description')} />
               <TreeItem nodeId="social_media_2" label={<div className={`${pathname.includes('photo_post_caption') && "bg-site_light-100"} text-sm`}>{t("photo_post_caption")}</div>} onClick={() => selectTemplate("social_media",'/template/photo_post_caption')} />
+              <TreeItem nodeId="social_media_3" label={<div className={`${pathname.includes('opinion_piece_column') && "bg-site_light-100"} text-sm`}>{t("opinion_piece_column")}</div>} onClick={() => selectTemplate("social_media",'/template/opinion_piece_column')} />
             </TreeItem>
           </TreeView>
         </div>

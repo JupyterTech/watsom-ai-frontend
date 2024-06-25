@@ -4,21 +4,20 @@ import Sidebar from '../../../components/Generate/Sidebar';
 import DocEditor from '../../../components/Generate/DocEditor'
 import Footer from '../../../components/Generate/Footer';
 
-import BlogIdeaOutline from '../../../components/Generate/Blog/BlogIdeaOutline';
+import OpinionPieceColumn from '../../../components/Generate/SocialMedia/OpinionPieceColumn';
 import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
-import { generateBlogIdeaOutline } from '../../../redux/template/blog';
+import { generateOpinionPieceColumn } from '../../../redux/template/social_media';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
 
-import { customizeBlogIntroParagraph } from '../../../utils';
-
-export default function BlogIdeaOutlinePage() {
+export default function OpinionPieceColumnPage() {
   const { globalState } = useSelector((state) => state);
   const { loading } = globalState;
   const { t } = useTranslation();
 
   const [title, setTitle] = useState("");
+  const [audience, setAudience] = useState("");
   const [keywords, setKeywords] = useState("");
   const [tone, setTone] = useState(0);
   const [result, setResult] = useState([]);
@@ -26,13 +25,16 @@ export default function BlogIdeaOutlinePage() {
   const dispatch = useDispatch();
 
   const validate = (data) => {
-    const {title, keywords} = data
+    const {title, keywords, audience} = data
 
     if(!title){
-      dispatch(openSnackBar({ message: t("msg_please_input_title"), status: 'error' }));
+      dispatch(openSnackBar({ message: t("msg_please_input_title_opinion"), status: 'error' }));
       return false;
     }else if(!keywords){
-      dispatch(openSnackBar({ message: t("msg_please_input_keywords"), status: 'error' }));
+      dispatch(openSnackBar({ message: t("msg_please_input_content_opinion"), status: 'error' }));
+      return false;
+    }else if(!audience){
+      dispatch(openSnackBar({ message: t("msg_please_input_target_audience"), status: 'error' }));
       return false;
     }
     return true;
@@ -48,20 +50,17 @@ export default function BlogIdeaOutlinePage() {
         
         const sendData = {
           title:title,
+          audience: audience,
           keywords:keywords,
           tone:tone,
           output:count,
         }
   
-        let res = await dispatch(generateBlogIdeaOutline(sendData));
+        let res = await dispatch(generateOpinionPieceColumn(sendData));
         if(res != false){
           dispatch(setLoading(false));
           console.log("res", res);
           setResult(res.result)
-
-          let tmp_content = customizeBlogIntroParagraph(res.result[0]);
-      
-          dispatch(setCurrentDocument(tmp_content))
         }else{
           dispatch(setLoading(false));
           dispatch(openSnackBar({ message: "Server Connection Error", status: 'error' }));
@@ -80,18 +79,19 @@ export default function BlogIdeaOutlinePage() {
           <div className='grid grid-cols-5'>
             <div className='col-span-3 border-gray-300' style={{borderRightWidth: "1px"}}>
               <Header 
-                title={t("blog_idea_outline")}
-                content={t("blog_idea_outline_content")}
+                title={t("opinion_piece_column")}
+                content={t("opinion_piece_column_content")}
               />
-              <BlogIdeaOutline 
+              <OpinionPieceColumn 
                 func_SetTitle = {setTitle}
                 func_SetKeywords = {setKeywords}
                 func_SetTone = {setTone}
+                func_SetAudience = {setAudience}
                 result = {result}
               />
               <Footer 
-                type = "blog_idea_outline"
-                data = {{title: title, keywords: keywords, tone: tone}}
+                type = "opinion_piece_column"
+                data = {{title: title, keywords: keywords, tone: tone, audience: audience}}
                 generate = {generate}
               />
             </div>

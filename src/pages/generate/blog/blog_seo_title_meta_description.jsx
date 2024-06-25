@@ -4,16 +4,14 @@ import Sidebar from '../../../components/Generate/Sidebar';
 import DocEditor from '../../../components/Generate/DocEditor'
 import Footer from '../../../components/Generate/Footer';
 
-import BlogIdeaOutline from '../../../components/Generate/Blog/BlogIdeaOutline';
+import BlogSeoTitleMetaDescription from '../../../components/Generate/Blog/BlogSeoTitleMetaDescription';
 import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
-import { generateBlogIdeaOutline } from '../../../redux/template/blog';
+import { generateBlogSeoTitleMetaDescription } from '../../../redux/template/blog';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
 
-import { customizeBlogIntroParagraph } from '../../../utils';
-
-export default function BlogIdeaOutlinePage() {
+export default function BlogSeoTitleMetaDescriptionPage() {
   const { globalState } = useSelector((state) => state);
   const { loading } = globalState;
   const { t } = useTranslation();
@@ -29,10 +27,10 @@ export default function BlogIdeaOutlinePage() {
     const {title, keywords} = data
 
     if(!title){
-      dispatch(openSnackBar({ message: t("msg_please_input_title"), status: 'error' }));
+      dispatch(openSnackBar({ message: t("msg_please_input_product_name"), status: 'error' }));
       return false;
     }else if(!keywords){
-      dispatch(openSnackBar({ message: t("msg_please_input_keywords"), status: 'error' }));
+      dispatch(openSnackBar({ message: t("msg_please_input_short_description"), status: 'error' }));
       return false;
     }
     return true;
@@ -53,15 +51,11 @@ export default function BlogIdeaOutlinePage() {
           output:count,
         }
   
-        let res = await dispatch(generateBlogIdeaOutline(sendData));
+        let res = await dispatch(generateBlogSeoTitleMetaDescription(sendData));
         if(res != false){
           dispatch(setLoading(false));
           console.log("res", res);
           setResult(res.result)
-
-          let tmp_content = customizeBlogIntroParagraph(res.result[0]);
-      
-          dispatch(setCurrentDocument(tmp_content))
         }else{
           dispatch(setLoading(false));
           dispatch(openSnackBar({ message: "Server Connection Error", status: 'error' }));
@@ -80,17 +74,17 @@ export default function BlogIdeaOutlinePage() {
           <div className='grid grid-cols-5'>
             <div className='col-span-3 border-gray-300' style={{borderRightWidth: "1px"}}>
               <Header 
-                title={t("blog_idea_outline")}
-                content={t("blog_idea_outline_content")}
+                title={t("blog_seo_title_meta_description")}
+                content={t("blog_seo_title_meta_description_content")}
               />
-              <BlogIdeaOutline 
+              <BlogSeoTitleMetaDescription 
                 func_SetTitle = {setTitle}
                 func_SetKeywords = {setKeywords}
                 func_SetTone = {setTone}
                 result = {result}
               />
               <Footer 
-                type = "blog_idea_outline"
+                type = "blog_seo_title_meta_description"
                 data = {{title: title, keywords: keywords, tone: tone}}
                 generate = {generate}
               />
