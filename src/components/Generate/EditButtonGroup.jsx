@@ -8,9 +8,10 @@ import { openSnackBar } from '../../redux/snackBarReducer';
 import { setCurrentDocument } from '../../redux/globalReducer';
 import { useDispatch, useSelector } from "react-redux";
 import wordsCounter from 'word-counting'
+import { customizeBlogIntroParagraph } from '../../utils';
 
 function EditButtonGroup({
-  content, index, removeContent
+  content, index, removeContent, type //type is for customize the markdown content
 }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -22,7 +23,13 @@ function EditButtonGroup({
   }
 
   const addDocument = () => {
-    dispatch(setCurrentDocument(content))
+    let tmp_content = content
+
+    if(type == "blog_idea_outline"){
+      tmp_content = customizeBlogIntroParagraph(tmp_content)
+    }
+
+    dispatch(setCurrentDocument(tmp_content))
   }
 
   const remove = () => {
