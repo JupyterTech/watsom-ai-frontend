@@ -10,14 +10,21 @@ import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import { MdOutlineExpandMore, MdOutlineChevronRight } from "react-icons/md"
 import { HiOutlineSearch } from 'react-icons/hi';
+import { useSelector, useDispatch } from "react-redux";
+import Search from "search-json"
+import { templateData } from '../Template/TemplateData';
+
+import { setExpandGroup } from '../../redux/globalReducer';
 
 function Sidebar({
   sidebarOpen,
   setSidebarOpen
 }) {
 
+  const { globalState } = useSelector((state) => state);
   const location = useLocation();
   const { pathname } = location;
+  const { current_expanded_group } = globalState
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -25,9 +32,11 @@ function Sidebar({
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
   const [search, setSearch] = useState("");   //search bar text 
+  const [searchResult, setSearchResult] = useState([]);   //search result 
 
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // close on click outside
   useEffect(() => {
@@ -61,6 +70,14 @@ function Sidebar({
 
   const changeSearch = (e) => {
     setSearch(e.target.value);
+
+    if(e.target.value.trim().length > 2){
+      console.log(Search.search(search.trim(), templateData))
+      let result = Search.search(search.trim(), templateData)
+      setSearchResult([...result])
+    }else{
+      setSearchResult([])
+    }
   }
 
   const keyDownSearch = (e) => {
@@ -69,6 +86,16 @@ function Sidebar({
         
       }
     }
+  }
+
+  const selectTemplate = (group, path) => {
+    dispatch(setExpandGroup(group))
+    navigate(path)
+  }
+
+  const clickSearch = (link, icon) => {
+    dispatch(setExpandGroup(icon))
+    navigate(`/template/${link}`)
   }
 
   return (
@@ -135,7 +162,7 @@ function Sidebar({
                   <div className="flex items-center justify-between">
                     <div className="grow flex items-center">
                       <span className="text-lg font-medium ml-3">
-                      ✨Try WatSom Pro
+                      ✨{t("try")} WatSom {t("pro")}
                       </span>
                     </div>
                     {/* Badge */}
@@ -155,34 +182,10 @@ function Sidebar({
                   }`}
                 >
                   <div className="flex items-center">
-                    <span className="text-md font-medium ml-3">Template</span>
+                    <span className="text-md font-medium ml-3">{t("template")}</span>
                   </div>
                 </NavLink>
               </li>
-              {/* Calendar */}
-              {/* <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('calendar') && 'bg-slate-900'}`}>
-                <NavLink
-                  end
-                  to="/calendar"
-                  className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
-                    pathname.includes('calendar') && 'hover:text-slate-200'
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <svg className="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                      <path className={`fill-current text-slate-600 ${pathname.includes('calendar') && 'text-indigo-500'}`} d="M1 3h22v20H1z" />
-                      <path
-                        className={`fill-current text-slate-400 ${pathname.includes('calendar') && 'text-indigo-300'}`}
-                        d="M21 3h2v4H1V3h2V1h4v2h10V1h4v2Z"
-                      />
-                    </svg>
-                    <span className="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                      Calendar
-                    </span>
-                  </div>
-                </NavLink>
-              </li> */}
-
             </ul>
           </div>
         </div>
@@ -191,26 +194,62 @@ function Sidebar({
           id="searchProduct"
           type="search"
           sizing="md"
-          placeholder="Search the template you are looking for"
+          placeholder={t("search_template")}
           required={true}
           icon={HiOutlineSearch}
           value={search}
           onChange={(e) => changeSearch(e)}
-          onKeyDown={(e) => keyDownSearch(e)}
+          // onKeyDown={(e) => keyDownSearch(e)}
           className="w-full py-8"
         />
+
+        <div className='w-10/12 self-center bg-gray-100 rounded-lg absolute top-72 z-50'>
+          {
+            searchResult && searchResult.length > 0 && searchResult.map((data, index)=>
+              <div onClick={()=>clickSearch(data.link, data.icon)} className="text-sm px-2 py-2 cursor-pointer text-gray-700 hover:text-blue-400 hover:bg-blue-100 rounded-md" key={index}>
+                <div className="flex-grow font-medium text-start">{t(data.link)}</div>
+                {/* <div className="text-sm font-normal text-gray-500 tracking-wide text-start">{t(data.content)}</div> */}
+              </div>
+            )
+          }
+        </div>
 
         <div className='text-white'>
           <TreeView
             aria-label="file system navigator"
             defaultCollapseIcon={<MdOutlineExpandMore />}
             defaultExpandIcon={<MdOutlineChevronRight />}
-            defaultExpanded={['1']}
+            defaultExpanded={[current_expanded_group]}
             sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
           >
-            <TreeItem nodeId="1" label="Templates">
-              <TreeItem nodeId="2" label={<div className={`${pathname.includes('long_article') && "bg-site_light-100"}`}>Long Article</div>} onClick={() => navigate('/template/long_article')} />
-              <TreeItem nodeId="3" label={<div className={`${pathname.includes('content_improver') && "bg-site_light-100"}`}>Content Improver</div>} onClick={() => navigate('/template/content_improver')} />
+            <TreeItem nodeId="youtube" label={t("group_youtube")}>
+              <TreeItem nodeId="youtube_1" label={<div className={`${pathname.includes('youtube_description') && "bg-site_light-100"} text-sm`}>{t("youtube_description")}</div>} onClick={() => selectTemplate("youtube",'/template/youtube_description')} />
+              <TreeItem nodeId="youtube_2" label={<div className={`${pathname.includes('youtube_introduction') && "bg-site_light-100"} text-sm`}>{t("youtube_introduction")}</div>} onClick={() => selectTemplate("youtube",'/template/youtube_introduction')} />
+              <TreeItem nodeId="youtube_3" label={<div className={`${pathname.includes('youtube_title') && "bg-site_light-100"} text-sm`}>{t("youtube_title")}</div>} onClick={() => selectTemplate("youtube",'/template/youtube_title')} />
+            </TreeItem>
+            <TreeItem nodeId="blog" label={t("group_blog")}>
+              <TreeItem nodeId="blog_1" label={<div className={`${pathname.includes('long_article') && "bg-site_light-100"} text-sm`}>{t("long_article")}</div>} onClick={() => selectTemplate("blog",'/template/long_article')} />
+              <TreeItem nodeId="blog_2" label={<div className={`${pathname.includes('content_improver') && "bg-site_light-100"} text-sm`}>{t("content_improver")}</div>} onClick={() => selectTemplate("blog",'/template/content_improver')} />
+              <TreeItem nodeId="blog_3" label={<div className={`${pathname.includes('blog_idea_outline') && "bg-site_light-100"} text-sm`}>{t("blog_idea_outline")}</div>} onClick={() => selectTemplate("blog",'/template/blog_idea_outline')} />
+              <TreeItem nodeId="blog_4" label={<div className={`${pathname.includes('blog_intro_paragraph') && "bg-site_light-100"} text-sm`}>{t("blog_intro_paragraph")}</div>} onClick={() => selectTemplate("blog",'/template/blog_intro_paragraph')} />
+              <TreeItem nodeId="blog_5" label={<div className={`${pathname.includes('blog_seo_title_meta_description') && "bg-site_light-100"} text-sm`}>{t("blog_seo_title_meta_description")}</div>} onClick={() => selectTemplate("blog",'/template/blog_seo_title_meta_description')} />
+              <TreeItem nodeId="blog_6" label={<div className={`${pathname.includes('paraphrasing_rewrite_quillbot') && "bg-site_light-100"} text-sm`}>{t("paraphrasing_rewrite_quillbot")}</div>} onClick={() => selectTemplate("blog",'/template/paraphrasing_rewrite_quillbot')} />
+              <TreeItem nodeId="blog_7" label={<div className={`${pathname.includes('interview_question') && "bg-site_light-100"} text-sm`}>{t("interview_question")}</div>} onClick={() => selectTemplate("blog",'/template/interview_question')} />
+            </TreeItem>
+            <TreeItem nodeId="amazon" label={t("group_amazon")}>
+              <TreeItem nodeId="amazon_1" label={<div className={`${pathname.includes('amazon_product_feature') && "bg-site_light-100"} text-sm`}>{t("amazon_product_feature")}</div>} onClick={() => selectTemplate("amazon",'/template/amazon_product_feature')} />
+              <TreeItem nodeId="amazon_2" label={<div className={`${pathname.includes('amazon_product_title') && "bg-site_light-100"} text-sm`}>{t("amazon_product_title")}</div>} onClick={() => selectTemplate("amazon",'/template/amazon_product_title')} />
+              <TreeItem nodeId="amazon_3" label={<div className={`${pathname.includes('amazon_product_description') && "bg-site_light-100"} text-sm`}>{t("amazon_product_description")}</div>} onClick={() => selectTemplate("amazon",'/template/amazon_product_description')} />
+            </TreeItem>
+            <TreeItem nodeId="ads" label={t("group_ads")}>
+              <TreeItem nodeId="ads_1" label={<div className={`${pathname.includes('facebook_ads') && "bg-site_light-100"} text-sm`}>{t("facebook_ads")}</div>} onClick={() => selectTemplate("ads",'/template/facebook_ads')} />
+              <TreeItem nodeId="ads_2" label={<div className={`${pathname.includes('google_ads') && "bg-site_light-100"} text-sm`}>{t("google_ads")}</div>} onClick={() => selectTemplate("ads",'/template/google_ads')} />
+            </TreeItem>
+            <TreeItem nodeId="social_media" label={t("group_social_media")}>
+              <TreeItem nodeId="social_media_1" label={<div className={`${pathname.includes('pinterest_title_description') && "bg-site_light-100"} text-sm`}>{t("pinterest_title_description")}</div>} onClick={() => selectTemplate("social_media",'/template/pinterest_title_description')} />
+              <TreeItem nodeId="social_media_2" label={<div className={`${pathname.includes('photo_post_caption') && "bg-site_light-100"} text-sm`}>{t("photo_post_caption")}</div>} onClick={() => selectTemplate("social_media",'/template/photo_post_caption')} />
+              <TreeItem nodeId="social_media_3" label={<div className={`${pathname.includes('opinion_piece_column') && "bg-site_light-100"} text-sm`}>{t("opinion_piece_column")}</div>} onClick={() => selectTemplate("social_media",'/template/opinion_piece_column')} />
+              <TreeItem nodeId="social_media_3" label={<div className={`${pathname.includes('google_business_post') && "bg-site_light-100"} text-sm`}>{t("google_business_post")}</div>} onClick={() => selectTemplate("social_media",'/template/google_business_post')} />
             </TreeItem>
           </TreeView>
         </div>
