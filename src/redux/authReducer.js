@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { userService } from '../services/users.service'
 import { openSnackBar } from "./snackBarReducer";
+import jwt_decode from "jwt-decode";
 
 let userToken = localStorage.getItem('user')? JSON.parse(localStorage.getItem('user')) : null;
-
+let userInfo = userToken ? jwt_decode(userToken) : {};
 
 export const authSlice = createSlice({
     name: "authentication",
@@ -11,7 +12,10 @@ export const authSlice = createSlice({
         loggingIn: false,
         loggedIn: userToken? true: false,
         userToken,
-        registering: false
+        userInfo,
+        registerUserState: false,
+        forgotPasswordState: false,
+        confirmMailState: false
     },
     reducers:{
         loginRequest: state => {
@@ -20,38 +24,127 @@ export const authSlice = createSlice({
         loginSuccess: (state, action) => {
             state.loggingIn = false;
             state.loggedIn = true;
-            state.userToken = action.payload;
+            state.userToken = action.payload.api_token;
+            state.userInfo = jwt_decode(action.payload.api_token);
         },
-        loginFailure : state => {
+        loginFailed : state => {
             state.loggingIn = false;
             state.loggedIn = false
         },
-        registerRequest: state => {
-            state.registering = true;
+        registerUserRequest: state => {
+            state.registerUserState = true;
         },
-        registerEnd : state => {
-            state.registering =  false;
+        registerUserSuccess : state => {
+            state.registerUserState =  false;
         },
-        logout: state => {
+        registerUserFailed : state => {
+            state.registerUserState =  false;
+        },
+        confirmMailRequest: state => {
+            state.confirmMailState = true;
+        },
+        confirmMailSuccess : state => {
+            state.confirmMailState =  false;
+            state.userInfo.is_verified = true;
+        },
+        confirmMailFailed : state => {
+            state.confirmMailState =  false;
+        },
+        forgotPasswordRequest: state => {
+            state.forgotPasswordState = true;
+        },
+        forgotPasswordSuccess : state => {
+            state.forgotPasswordState =  false;
+        },
+        forgotPasswordFailed : state => {
+            state.forgotPasswordState =  false;
+        },
+        logoutRequest: state => {
             localStorage.removeItem('user');
             state.loggedIn = false;
             state.userToken = null;
+            state.userInfo = null;
         }
     }
 });
 
-const {  loginRequest, loginSuccess, loginFailure, registerRequest, registering, registerEnd} = authSlice.actions;
+const {  
+    loginRequest, loginSuccess, loginFailed, 
+    registerUserRequest, registerUserFailed, registerUserSuccess,
+    forgotPasswordFailed, forgotPasswordRequest, forgotPasswordSuccess,
+    confirmMailFailed, confirmMailRequest, confirmMailSuccess,
+    logoutRequest
+} = authSlice.actions;
 
-export const registerUser = (user) => async (dispatch) => {
-    dispatch(registerRequest());
+export const login = (user) => async (dispatch) => {
+
+    dispatch(loginRequest());
 
     try {
-        await userService.registerUser(user);
-        dispatch(openSnackBar({message: `We've set an email to ${user.email}. Please check your email to verify and continue`, status: 'success'}));
-        dispatch(registerEnd());
+        var payload = await userService.login(user);
+        dispatch(loginSuccess(payload));
+        return {status: true, result: payload};
     } catch (error) {
-        dispatch(registerEnd());
-        dispatch(openSnackBar({message: error.messsage, status: 'error'}));
+        dispatch(loginFailed());
+        // dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return {status: false, result: error["message"]};
+    }
+}
+
+export const registerUser = (user) => async (dispatch) => {
+    dispatch(registerUserRequest());
+
+    try {
+        var payload = await userService.registerUser(user);
+        dispatch(registerUserSuccess(payload));
+        return {status: true, result: payload};
+    } catch (error) {
+        dispatch(registerUserFailed());
+        // dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return {status: false, result: error["message"]};
+    }
+}
+
+export const confirmMail = (token) => async (dispatch) => {
+    dispatch(confirmMailRequest());
+
+    try {
+        var payload = await userService.confirmMail(token);
+        dispatch(confirmMailSuccess(payload));
+        return {status: true, result: payload};
+    } catch (error) {
+        dispatch(confirmMailFailed());
+        dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return {status: false, result: error["message"]};
+    }
+}
+
+export const forgotPassword = (user) => async (dispatch) => {
+    dispatch(forgotPasswordRequest());
+
+    try {
+        var payload = await userService.forgotPassword(user);
+        dispatch(forgotPasswordSuccess(payload));
+        return {status: true, result: payload};
+    } catch (error) {
+        dispatch(forgotPasswordFailed());
+        // dispatch(openSnackBar({ message: error["message"], status: 'error' }));
+        // throw new Error(error);
+        return {status: false, result: error["message"]};
+    }
+}
+
+export const logout = () => async (dispatch) => {
+    dispatch(logoutRequest());
+
+    try {
+        await userService.logout();
+    } catch (error) {
+        console.log(error);
+        dispatch(openSnackBar({ message: error["message"], status: 'error' }));
         throw new Error(error);
     }
 }

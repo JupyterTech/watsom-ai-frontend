@@ -1,17 +1,17 @@
 import  { authHeader, handleResponse } from '../utils';
 import { API_BASE } from '../config/constants';
 
-const login = async (email, password) => {
+const login = async (user) => {
     const requestOptions = {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({email, password})
+        body: JSON.stringify(user)
     };
 
     const response = await fetch(`${API_BASE}/auth/login`, requestOptions);
-    const user = await handleResponse(response);
-    localStorage.setItem('user', JSON.stringify(user.data));
-    return user;
+    const userInfo = await handleResponse(response);
+    localStorage.setItem('user', JSON.stringify(userInfo.api_token));
+    return userInfo;
 }
 
 const logout = () => {
@@ -30,11 +30,43 @@ const registerUser = async (user) => {
     };
 
     const response = fetch(`${API_BASE}/auth/register`, requestOptions);
-    return await handleResponse(response, logout);
+    return await handleResponse(response);
+}
+
+const confirmMail = async (token) => {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS'
+        },
+        body: JSON.stringify({token})
+    };
+
+    const response = fetch(`${API_BASE}/auth/confirm`, requestOptions);
+    return await handleResponse(response);
+}
+
+const forgotPassword = async (user) => {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS'
+        },
+        body: JSON.stringify(user)
+    };
+
+    const response = fetch(`${API_BASE}/auth/forgot_password`, requestOptions);
+    return await handleResponse(response);
 }
 
 export const userService = {
     login,
     logout,
-    registerUser
+    registerUser,
+    forgotPassword,
+    confirmMail
 }
