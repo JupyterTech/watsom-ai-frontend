@@ -67,7 +67,8 @@ function YoutubeHookIntroduction({
                 {t("youtube_title")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -82,7 +83,8 @@ function YoutubeHookIntroduction({
                 {t("keywords")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />

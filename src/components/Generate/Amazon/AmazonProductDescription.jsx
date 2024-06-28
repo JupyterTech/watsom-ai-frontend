@@ -68,7 +68,8 @@ function AmazonProductDescription({
               </div>
               <div className='col-span-9'>
                 
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />

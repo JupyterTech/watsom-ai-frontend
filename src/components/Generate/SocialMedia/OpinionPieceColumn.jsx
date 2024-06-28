@@ -75,7 +75,8 @@ function OpinionPieceColumn({
               </div>
               <div className='col-span-9'>
                 
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -103,7 +104,8 @@ function OpinionPieceColumn({
                 {t("audience")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1} 
                   value={audience}
                   onChange={(e) => changeAudience(e.target.value)}
                 />

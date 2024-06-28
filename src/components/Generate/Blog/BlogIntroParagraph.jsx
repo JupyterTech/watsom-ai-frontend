@@ -67,7 +67,8 @@ function BlogIntroParagraph({
                 {t("blog_title_topic")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -82,7 +83,8 @@ function BlogIntroParagraph({
                 {t("audience")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />

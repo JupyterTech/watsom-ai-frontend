@@ -67,7 +67,8 @@ function PhotoPostCaption({
                 {t("post_about")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -82,7 +83,8 @@ function PhotoPostCaption({
                 {t("keywords")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />

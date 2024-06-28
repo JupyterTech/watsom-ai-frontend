@@ -76,7 +76,7 @@ export default function YoutubeDescription() {
 
   return (
     <div>
-      <div className='grid grid-cols-12 h-full bg-gray-100 bg-gray-100'>
+      <div className='grid grid-cols-12 h-full bg-gray-100'>
         <div className='col-span-2'>
           <Sidebar/>
         </div>

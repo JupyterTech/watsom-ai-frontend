@@ -9,6 +9,7 @@ import EditButtonGroup from '../EditButtonGroup';
 
 import { setLoading } from '../../../redux/globalReducer';
 import TextareaAutosize from 'react-textarea-autosize';
+import 'tailwindcss/tailwind.css';
 
 function YoutubeDescription({
   func_SetTitle, func_SetKeywords, func_SetTone, result
@@ -67,7 +68,8 @@ function YoutubeDescription({
                 {t("youtube_title")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -82,7 +84,8 @@ function YoutubeDescription({
                 {t("keywords")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />

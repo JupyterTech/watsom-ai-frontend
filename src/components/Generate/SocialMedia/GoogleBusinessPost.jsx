@@ -79,7 +79,8 @@ function GoogleBusinessPost({
                 {t("short_description")}
               </div>
               <div className='col-span-9'>
-                <TextInput 
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />
