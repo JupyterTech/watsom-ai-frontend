@@ -199,5 +199,8 @@
     "update_password": "Actualizar contraseña",
     "you_created_acc_on": "Usted creó su cuenta el",
     "you_currently_on": "Actualmente estás en",
-    "your_expiry_date": "Tu fecha de caducidad es"
+    "your_expiry_date": "Tu fecha de caducidad es",
+    "something_missing": "Algo falta.",
+    "cant_find_page": "Lo sentimos, no podemos encontrar esa página. Encontrarás mucho para explorar en la página de inicio.",
+    "back_to": "Volver a la página de inicio"
 }

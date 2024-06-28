@@ -199,5 +199,8 @@
     "update_password": "Mettre à jour le mot de passe",
     "you_created_acc_on": "Vous avez créé votre compte le",
     "you_currently_on": "Vous êtes actuellement sur",
-    "your_expiry_date": "Votre date d'expiration est"
+    "your_expiry_date": "Votre date d'expiration est",
+    "something_missing": "Il manque quelque chose.",
+    "cant_find_page": "Désolé, nous ne trouvons pas cette page. Vous trouverez beaucoup à explorer sur la page d'accueil.",
+    "back_to": "Retour à la page d'accueil"
 }

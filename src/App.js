@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { Routes, Route,  Navigate } from 'react-router-dom';
 import Template from './pages/template';
 
+import NotFound from './pages/NotFound';
+
 import Signin from './pages/auth/Signin'
 import Signup from './pages/auth/Signup'
 import ResetPassword from './pages/auth/ResetPassword';
@@ -60,6 +62,7 @@ function App() {
         loggedIn && !userInfo?.is_verified && <VerifyWarning />
       }
       <Routes>
+        <Route path='*' element={<NotFound />}/>
         <Route path = "/" element ={<Navigate to = "/template"/>} />
 
         <Route path = "/signin" element = {<Signin/>} />
