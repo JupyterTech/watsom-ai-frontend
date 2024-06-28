@@ -13,7 +13,7 @@ function Sidebar({
   const location = useLocation();
   const { pathname } = location;
 
-  const { userInfo } = authState;
+  const { userInfo, loggedIn } = authState;
 
   const trigger = useRef(null);
   const sidebar = useRef(null);
@@ -22,6 +22,7 @@ function Sidebar({
   const [sidebarExpanded, setSidebarExpanded] = useState(storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true');
 
   const { t } = useTranslation();
+  const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
 
   // close on click outside
   useEffect(() => {
@@ -110,7 +111,13 @@ function Sidebar({
                 fill="url(#logo-b)"
               />
             </svg>
-            <div className='text-white self-center'>{t("free_plan")}</div>
+            <div className='text-white self-center'>
+              {
+                loggedIn == false 
+                  ? <span className='text-orange-400'>{t("please_login")}</span>
+                  : userInfo?.plan >= 0 && <span>{plan_list[userInfo.plan]}</span>
+              }
+            </div>
           </NavLink>
         </div>
 
@@ -128,7 +135,7 @@ function Sidebar({
               <li className={`px-3 py-2 rounded-sm mb-0.5 last:mb-0 ${pathname.includes('subscription') && 'bg-slate-900'}`}>
                 <NavLink
                   end
-                  to="/"
+                  to="/subscription"
                   className={`block text-slate-200 hover:text-white truncate transition duration-150 ${
                     pathname.includes('subscription') && 'hover:text-slate-200'
                   }`}

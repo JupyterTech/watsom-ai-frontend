@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { Routes, Route,  Navigate } from 'react-router-dom';
 import Template from './pages/template';
 
@@ -6,6 +7,7 @@ import Signup from './pages/auth/Signup'
 import ResetPassword from './pages/auth/ResetPassword';
 import ConfirmMail from './pages/auth/Confirm';
 import SetPassword from './pages/auth/SetPassword';
+import SubScription from './pages/SubScription';
 
 import LongArticlePage from './pages/generate/blog/long_article'
 import ContentImproverPage from './pages/generate/blog/content_improver';
@@ -34,12 +36,21 @@ import GoogleAdsPage from './pages/generate/ads/google_ads';
 import "./i18n";
 import Loading from './components/Loading';
 import VerifyWarning from './components/VerifyWarning';
-import { useSelector } from "react-redux";
+import { useDispatch ,useSelector } from "react-redux";
+import { getToken } from './redux/authReducer';
 
 function App() {
   const { globalState, authState } = useSelector((state) => state);
   const { loading } = globalState;
-  const { userInfo, loggedIn } = authState
+  const { userInfo, loggedIn, userToken } = authState
+  const dispatch = useDispatch()
+
+
+  useEffect(() => {
+    if(userToken){
+      dispatch(getToken(userToken))
+    }
+  }, []);
 
   return (
     <div className="App">
@@ -55,6 +66,7 @@ function App() {
         <Route path = "/reset-password" element = {<ResetPassword/>} />
         <Route path = "/confirm/:confirm_token" element = {<ConfirmMail/>} />
         <Route path = "/reset_password/:confirm_token" element = {<SetPassword/>} />
+        <Route path = "/subscription" element = {<SubScription/>} />
 
         <Route path = "/template" element = {<Template/>} />
         <Route path = "/template/long_article" element = {<LongArticlePage/>} />
