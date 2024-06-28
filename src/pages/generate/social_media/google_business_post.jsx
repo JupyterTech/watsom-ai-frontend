@@ -11,9 +11,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { generateGoogleBusinessPost } from '../../../redux/template/social_media';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
 
+import { updateToken } from '../../../redux/authReducer';
+
 export default function GoogleBusinessPostPage() {
-  const { globalState } = useSelector((state) => state);
+  const { globalState, authState } = useSelector((state) => state);
   const { loading } = globalState;
+  const { userToken } = authState;
   const { t } = useTranslation();
 
   const [keywords, setKeywords] = useState("");
@@ -33,7 +36,7 @@ export default function GoogleBusinessPostPage() {
     return true;
   }
 
-  const generate = async (data, count, type) => {
+  const generate = async (data, count, type, lang) => {
     if(!loading){
       let is_valid = validate(data);
   
@@ -44,15 +47,22 @@ export default function GoogleBusinessPostPage() {
         const sendData = {
           keywords:keywords,
           tone:tone,
+          token: userToken,
           post_type:post_type,
           output:count,
+          lang:lang,
         }
   
         let res = await dispatch(generateGoogleBusinessPost(sendData));
         if(res != false){
           dispatch(setLoading(false));
-          console.log("res", res);
-          setResult(res.result)
+          if(res.result == false){
+            dispatch(openSnackBar({ message: t(res.message) , status: 'error' }));  
+          }else{
+            setResult(res.result)
+            dispatch(updateToken(res.token))
+            console.log(res.token)
+          }
         }else{
           dispatch(setLoading(false));
           dispatch(openSnackBar({ message: "Server Connection Error", status: 'error' }));

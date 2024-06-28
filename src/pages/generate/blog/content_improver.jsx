@@ -11,14 +11,16 @@ import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from '../../../redux/globalReducer';
+import { updateToken } from '../../../redux/authReducer';
 
 export default function ContentImproverPage() {
-  const { blogState, globalState } = useSelector((state) => state);
+  const { blogState, globalState, authState } = useSelector((state) => state);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const { contentImproverState } = blogState;
   const { loading } = globalState;
+  const { userToken } = authState;
 
   const [contents, setContents] = useState("")
   const [tone, setTone] = useState(0);
@@ -34,7 +36,7 @@ export default function ContentImproverPage() {
     return true;
   }
 
-  const generate = async (data, count, type) => {
+  const generate = async (data, count, type, lang) => {
     if(!loading){
       let is_valid = validate(data);
 
@@ -47,19 +49,27 @@ export default function ContentImproverPage() {
 
         const sendData = {
           output:count,
+          lang:lang,
           type:type,
           content:contents,
-          tone:tone
+          tone:tone,
+          token: userToken,
         }
 
         let res = await dispatch(contentImprover(sendData));
         if(res != false){
           dispatch(setLoading(false));
           console.log("res", res);
-          setResult(res.result)
+          if(res.result == false){
+            dispatch(openSnackBar({ message: t(res.message) , status: 'error' }));  
+          }else{
+            setResult(res.result)
+            dispatch(updateToken(res.token))
+            console.log(res.token)
+          }
         }else{
           dispatch(setLoading(false));
-          dispatch(openSnackBar({ message: "Server Connection Error", status: 'error' }));
+          dispatch(openSnackBar({ message: t("server_connection_error") , status: 'error' }));
         }
       }
     }
