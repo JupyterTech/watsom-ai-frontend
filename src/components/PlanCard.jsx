@@ -3,12 +3,25 @@ import { Link } from 'react-router-dom';
 import { Card } from 'flowbite-react'
 
 import { useTranslation } from "react-i18next";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import PayPalBtn from './Paypal/PaypalButton';
+import { upgradePlan } from '../redux/authReducer';
+import { openSnackBar } from '../redux/snackBarReducer';
+import { useNavigate } from 'react-router-dom'
+
+import { PLAN_ESSENTIAL, PLAN_PRO_MONTH, PLAN_PRO_YEAR, SECRET_KEY } from '../config/constants';
 
 function PlanCard({plan}) {
   const { authState } = useSelector((state) => state);
   const { t } = useTranslation();
-  const { userInfo } = authState;
+	const dispatch = useDispatch();
+  const navigate = useNavigate();
+	
+	const plan_essential = PLAN_ESSENTIAL;
+	const plan_pro_month = PLAN_PRO_MONTH;
+	const plan_pro_year = PLAN_PRO_YEAR;
+
+  const { userToken, loggedIn } = authState;
   const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
 	const plan_cost = [ 0, 9, 49, 348 ]
 	const plan_period = [t("month"), t("month"), t("month"), t("year")]
@@ -23,6 +36,32 @@ function PlanCard({plan}) {
 		t("lock_low_price"),
 		t("cancel_any_time")
 	]
+
+	const plan_id = ["Free", plan_essential, plan_pro_month, plan_pro_year]
+
+	const paypalSubscribe = (data, actions) => {
+			return actions.subscription.create({
+					'plan_id': plan_id[plan]
+			});
+	};
+
+	const paypalOnError = (err) => {
+			console.log("Error")
+	}
+
+	const paypalOnApprove = async (data, detail) => {
+			// call the backend api to store transaction details
+			console.log("Payapl approved")
+			console.log(data.subscriptionID)
+
+			let res = await dispatch(upgradePlan(userToken + "%%" + plan))
+			if(res.status != false){
+        dispatch(openSnackBar({ status: "success", message: t("upgrade_plan_success") }))
+        navigate("/template")
+      }else{
+        dispatch(openSnackBar({ status: "error", message: t(res.result) }))
+      }
+	};
 
   return (
     <Card>
@@ -103,12 +142,25 @@ function PlanCard({plan}) {
 				</li> */}
 				
 			</ul>
-			<button
+			{/* <PayPalButton type="subscription" /> */}
+			{
+				loggedIn == true &&
+				<PayPalBtn
+					amount = {plan_cost[plan]}
+					currency = "USD"
+					createSubscription={paypalSubscribe}
+					onApprove={paypalOnApprove}
+					catchError={paypalOnError}
+					onError={paypalOnError}
+					onCancel={paypalOnError}
+				/>
+			}
+			{/* <button
 				type="button"
 				className="inline-flex w-full justify-center rounded-lg bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900"
 			>
 				{t("choose_plan")}
-			</button>
+			</button> */}
 		</Card>
   );
 }
