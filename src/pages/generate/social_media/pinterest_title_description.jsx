@@ -77,12 +77,12 @@ export default function PinterestTitleDescriptionPage() {
   return (
     <div>
       <div className='flex h-full bg-gray-100'>
-        <div style={{minWidth: "20rem"}} >
+        <div className="generate_sidebar" >
           <Sidebar/>
         </div>
-        <div style={{width: " calc(100wh - 20rem) "}}>
-          <div className='grid grid-cols-12'>
-            <div className='col-span-5 border-gray-300 my-4 ml-8 bg-white' style={{borderWidth: "1px", borderRadius: '25px'}}>
+        <div className="generate_body" >
+          <div className='generate_body_main'>
+            <div className='generate_input border-gray-300 my-4 ml-8 bg-white' style={{borderWidth: "1px", borderRadius: '25px'}}>
               <Header 
                 title={t("pinterest_title_description")}
                 content={t("pinterest_title_description_content")}
@@ -99,7 +99,7 @@ export default function PinterestTitleDescriptionPage() {
                 generate = {generate}
               />
             </div>
-            <div className='col-span-7'>
+            <div className='generate_editor'>
               <DocEditor />
             </div>
           </div>

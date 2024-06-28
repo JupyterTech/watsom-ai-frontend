@@ -273,12 +273,12 @@ function LongArticle({
             </div>
 
             <div style={{textAlign: "-webkit-center"}}>
-              <div className='w-4/5 text-start'>
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+              <div className='w-4/5 text-start py-2'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("blog_title_topic")}
                   </div>
-                  <div className='col-span-9'>
+                  <div>
                     <Textarea 
                       rows={1} 
                       value={title}
@@ -290,11 +290,11 @@ function LongArticle({
                   </div>
                 </div>
 
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("keywords")}
                   </div>
-                  <div className='col-span-9'>
+                  <div>
                     <Textarea 
                       rows={1}  
                       value={keywords}
@@ -306,11 +306,11 @@ function LongArticle({
                   </div>
                 </div>
                 
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("tone")}
                   </div>
-                  <div className='col-span-9'>
+                  <div>
                     <ToneSelect 
                       selectTone = {selectTone}
                     />

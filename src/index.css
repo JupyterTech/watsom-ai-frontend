@@ -14,3 +14,82 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.generate_sidebar {
+  max-width: 320px;
+}
+
+.generate_body {
+  width: calc(100vw - 320px);
+}
+
+.generate_body_main {
+  display: flex;
+}
+
+@media (min-width: 1600px) {
+  .generate_input {
+    min-width: 640px;
+    max-width: 640px;
+  }
+}
+
+.generate_editor {
+  width: calc(100vw - 960px);
+}
+
+.generate_attr_width {
+  height: calc(100vh - 12rem)
+}
+
+.footer_style {
+  text-align: -webkit-center;
+  height: 5rem;
+  border-top-width: 1px;
+}
+
+.footer_main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer_attr {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 1600px) {
+  .generate_body_main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .generate_input {
+    width: auto;
+  }
+  
+  .generate_editor {
+    width: auto;
+  }
+}
+
+/* change footer */
+@media (max-width: 1366px) {
+  .footer_style{
+    height: 8rem;
+  }
+
+  .generate_attr_width {
+    height: calc(100vh - 15rem)
+  }
+
+  .footer_attr {
+    display: block;
+  }
+  
+  .footer_attr_label {
+    width: 64px;
+    text-align: end;
+  }
+
+}

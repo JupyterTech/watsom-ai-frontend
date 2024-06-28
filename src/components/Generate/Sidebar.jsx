@@ -109,13 +109,13 @@ function Sidebar({
           sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden="true"
-      ></div> */}
+     > */}
 
       {/* Sidebar */}
       <div
         id="sidebar"
         ref={sidebar}
-        className="bg-black h-screen p-4"
+        className="bg-black h-screen p-4 z-40"
         // className={`bg-black flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-full lg:w-full lg:sidebar-expanded:!w-full 2xl:!w-full shrink-0 p-4 transition-all duration-200 ease-in-out`}
       >
         {/* Sidebar header */}

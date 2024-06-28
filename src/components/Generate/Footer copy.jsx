@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 import { setOutputCurrentLanguage } from '../../redux/globalReducer';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,6 @@ import { openSnackBar } from '../../redux/snackBarReducer';
 import { useNavigate } from 'react-router-dom'
 import { getAvailable } from '../../redux/authReducer';
 import { setLoading } from '../../redux/globalReducer';
-import { Button } from 'flowbite-react';
 
 function Footer({
   type,
@@ -26,26 +25,6 @@ function Footer({
   const output_count = [1,2,3,4,5];
   const output_language = ["French", "English", "Spanish"]
   
-  const [dimensions, setDimensions] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-
-  useEffect(() => {
-    function handleResize() {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
   function is_valid_date(){
     let now_date = Date.now();
     let plan_start = new Date(userInfo?.plan_start_date).getTime();
@@ -110,45 +89,43 @@ function Footer({
     dispatch(setOutputCurrentLanguage(lang))
   }
 
-  // console.log(dimensions.width, dimensions.height)
-
   return (
-    <div className="footer_style pt-4 border-gray-300">
-      <div className='footer_main mx-4'>
-        <div className='footer_attr'>
-          <div className= {`flex gap-2 ${dimensions.width <= 1366 && "pb-2"}`}>
-            <div className="footer_attr_label text-xl py-2 font-bold tracking-tight text-gray-900">
-              N = 
-            </div>
-
-            <select className={`rounded-lg ${dimensions.width <= 1366 ? "w-32" : "w-20"} disabled:cursor-not-allowed`} onChange={(e)=>setShowCount(e.target.value)} defaultValue={count_disable ? 1 : showCount} disabled = {count_disable} >
-              {
-                output_count.map((data,index)=>
-                  <option value={data} key={index}>{data}</option>
-                )
-              }
-            </select>
+    <div style={{textAlign:"-webkit-center", height:"5rem", borderTopWidth: "1px"}} className="pt-4 border-gray-300">
+      <div className='w-11/12 justify-between items-center grid grid-cols-12'>
+        <div className= "col-span-3 flex gap-2">
+          <div className="text-xl py-2 font-bold tracking-tight text-gray-900">
+            N = 
           </div>
 
-          <div className="flex gap-2">
-            <div className="footer_attr_label text-xl py-2 font-bold tracking-tight text-gray-900">
-              lang = 
-            </div>
-
-            <select className='rounded-lg w-32 disabled:cursor-not-allowed' onChange={(e)=>selectOutputLanguage(e.target.value)} defaultValue={showLanguage}>
-              {
-                output_language.map((data,index)=>
-                  <option value={data} key={index}>{data}</option>
-                )
-              }
-            </select>
-          </div>
+          <select className='rounded-lg w-20 disabled:cursor-not-allowed' onChange={(e)=>setShowCount(e.target.value)} defaultValue={count_disable ? 1 : showCount} disabled = {count_disable} >
+            {
+              output_count.map((data,index)=>
+                <option value={data} key={index}>{data}</option>
+              )
+            }
+          </select>
         </div>
 
-        <div className="self-center">
-          <Button onClick={() => clickGenerate()}>
-            <div className=" px-4">{t("generate")}</div>
-          </Button>
+        <div className="col-span-5 flex gap-2">
+          <div className="text-xl py-2 font-bold tracking-tight text-gray-900">
+            lang = 
+          </div>
+
+          <select className='rounded-lg w-32 disabled:cursor-not-allowed' onChange={(e)=>selectOutputLanguage(e.target.value)} defaultValue={showLanguage}>
+            {
+              output_language.map((data,index)=>
+                <option value={data} key={index}>{data}</option>
+              )
+            }
+          </select>
+        </div>
+
+        <div className="col-span-4 flex items-center">
+          <div
+              className="w-full font-medium p-1  text-sm inline-flex items-center justify-center border-2 border-transparent rounded-lg leading-5 shadow-sm transition duration-150 ease-in-out bg-site_light-100 hover:!bg-blue-800 text-white cursor-pointer"
+          >
+            <div className="text-lg hidden md:block py-1 px-16" onClick={() => clickGenerate()}>{t("generate")}</div>
+          </div>
         </div>
       </div>
     </div>

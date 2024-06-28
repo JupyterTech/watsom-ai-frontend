@@ -59,15 +59,15 @@ function YoutubeDescription({
   }
 
   return (
-    <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100" style={{height: " calc(100vh - 12rem) "}}>
+    <div className="generate_attr_width relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100">
       <div className="pb-8">
         <div style={{textAlign: "-webkit-center"}}>
-          <div className='w-4/5 text-start'>
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+          <div className='w-4/5 text-start py-2'>
+            <div>
+              <div className='font-bold py-2'>
                 {t("youtube_title")}
               </div>
-              <div className='col-span-9'>
+              <div>
                 <Textarea 
                   rows={1}
                   value={title}
@@ -79,11 +79,11 @@ function YoutubeDescription({
               </div>
             </div>
 
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+            <div>
+              <div className='font-bold py-2'>
                 {t("keywords")}
               </div>
-              <div className='col-span-9'>
+              <div>
                 <Textarea 
                   rows={1}
                   value={keywords}
@@ -95,11 +95,11 @@ function YoutubeDescription({
               </div>
             </div>
             
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+            <div>
+              <div className='font-bold py-2'>
                 {t("tone")}
               </div>
-              <div className='col-span-9'>
+              <div>
                 <ToneSelect 
                   selectTone = {selectTone}
                 />
