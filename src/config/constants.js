@@ -1,4 +1,4 @@
-const DEV_MODE = true;
+const DEV_MODE = false;
 
 export const GPT_SERVER = DEV_MODE === true ? process.env.REACT_APP_GPT_SERVER : process.env.REACT_APP_LIVE_GPT_SERVER_EC
 export const API_BASE = DEV_MODE === true ? process.env.REACT_APP_API_BASE : process.env.REACT_APP_LIVE_API_BASE_EC

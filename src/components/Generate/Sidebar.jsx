@@ -115,9 +115,8 @@ function Sidebar({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`bg-black flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-full lg:w-full lg:sidebar-expanded:!w-full 2xl:!w-full shrink-0 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-64'
-        }`}
+        className="bg-black h-screen p-4"
+        // className={`bg-black flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-full lg:w-full lg:sidebar-expanded:!w-full 2xl:!w-full shrink-0 p-4 transition-all duration-200 ease-in-out`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">

@@ -27,7 +27,7 @@ function Header({
           <div className="flex">
 
             {/* Hamburger button */}
-            <button
+            {/* <button
               className="text-slate-500 hover:text-slate-600 lg:hidden"
               aria-controls="sidebar"
               aria-expanded={sidebarOpen}
@@ -39,7 +39,7 @@ function Header({
                 <rect x="4" y="11" width="16" height="2" />
                 <rect x="4" y="17" width="16" height="2" />
               </svg>
-            </button>
+            </button> */}
             {
               isLogo == true &&
               <Link to="/">          

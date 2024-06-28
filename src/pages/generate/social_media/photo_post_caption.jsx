@@ -76,11 +76,11 @@ export default function PhotoPostCaptionPage() {
 
   return (
     <div>
-      <div className='grid grid-cols-12 h-full bg-gray-100'>
-        <div className='col-span-2'>
+      <div className='flex h-full bg-gray-100'>
+        <div style={{minWidth: "20rem"}} >
           <Sidebar/>
         </div>
-        <div className='col-span-10'>
+        <div style={{width: " calc(100wh - 20rem) "}}>
           <div className='grid grid-cols-12'>
             <div className='col-span-5 border-gray-300 my-4 ml-8 bg-white' style={{borderWidth: "1px", borderRadius: '25px'}}>
               <Header 

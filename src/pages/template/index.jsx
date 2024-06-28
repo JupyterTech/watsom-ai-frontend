@@ -11,11 +11,11 @@ export default function Index() {
   return (
       <div>
 
-        <div className='grid grid-cols-12'>
-          <div className='col-span-2'>
+        <div className='flex h-full'>
+          <div style={{minWidth: "20rem"}}>
             <Sidebar/>
           </div>
-          <div className='col-span-10'>
+          <div style={{width: " calc(100wh - 20rem) "}}>
             <Header />
 
             <div className='h-6 bg-site_light-100 text-white text-center text-sm font-bold w-full'>
