@@ -20,7 +20,7 @@ function SubScription() {
         </div>
 
         <div className='flex justify-center min-h-screen pt-[30px] px-[40px]'>
-            <div className="w-3/5">
+            <div className="max-w-3/5">
                 <p className="text-[#00153B] text-[20px] leading-[40px] font-semibold">
                     {t("your_subscription")}
                 </p>

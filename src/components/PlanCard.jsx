@@ -10,6 +10,7 @@ import { openSnackBar } from '../redux/snackBarReducer';
 import { useNavigate } from 'react-router-dom'
 
 import { PLAN_ESSENTIAL, PLAN_PRO_MONTH, PLAN_PRO_YEAR, SECRET_KEY } from '../config/constants';
+import PayPalBtnCosmetic from './Paypal/PaypalButton_Cosmetic';
 
 function PlanCard({plan}) {
   const { authState } = useSelector((state) => state);
@@ -144,7 +145,7 @@ function PlanCard({plan}) {
 			</ul>
 			{/* <PayPalButton type="subscription" /> */}
 			{
-				loggedIn == true &&
+				loggedIn == true ?
 				<PayPalBtn
 					amount = {plan_cost[plan]}
 					currency = "USD"
@@ -153,7 +154,8 @@ function PlanCard({plan}) {
 					catchError={paypalOnError}
 					onError={paypalOnError}
 					onCancel={paypalOnError}
-				/>
+				/> :
+				<PayPalBtnCosmetic />
 			}
 			{/* <button
 				type="button"
