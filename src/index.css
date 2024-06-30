@@ -17,6 +17,7 @@ code {
 
 .generate_sidebar {
   max-width: 320px;
+  min-width: 320px;
 }
 
 .generate_body {
