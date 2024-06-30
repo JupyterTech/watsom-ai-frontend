@@ -35,7 +35,7 @@ function History() {
             {t("future")} of WatSom 🎉
         </div>
 
-        <div className='flex justify-center min-h-screen pt-[30px] px-[40px]'>
+        <div className='flex justify-center min-h-screen pt-[30px] px-[40px] '>
             <div className="w-2/3 min-w-3/5">
                 <div className="w-full">
                     <HistoryTable />

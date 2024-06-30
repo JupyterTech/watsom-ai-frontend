@@ -99,31 +99,31 @@ function PaginationNav1({
 
 function HistoryTablePagination(props) {
     const { t } = useTranslation();
-    // const { userState } = useSelector((state) => state);
-    // const { filter_count } = userState;
+    const { contentHistoryState } = useSelector((state) => state);
+    const { contentHistoryCount } = contentHistoryState;
 
-    // const { showCount, currentPage } = props.condition;
+    const { showCount, currentPage } = props.condition;
 
-    // const setCurrentPage = (value) => {
-    //     const { setCondition, getData } = props;
-    //     setCondition("currentPage", value);
-    //     getData();
-    // }
+    const setCurrentPage = (value) => {
+        const { setCondition, getData } = props;
+        setCondition("currentPage", value);
+        getData();
+    }
 
-    // const total_count = filter_count;
-    // const total_page = Math.ceil(total_count / showCount);
+    const total_count = contentHistoryCount;
+    const total_page = Math.ceil(total_count / showCount);
 
     return (
         <div className="flex justify-between gap-3 flex-wrap py-6 border-t dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
             <div>
-                {/* <p>{t("showing")} {showCount * currentPage + 1} {t("to")} {showCount * (currentPage + 1) < total_count ? showCount * (currentPage + 1) : total_count} of {total_count} {t("entries")} </p> */}
+                <p>{t("showing")} {showCount * currentPage + 1} {t("to")} {showCount * (currentPage + 1) < total_count ? showCount * (currentPage + 1) : total_count} of {total_count} {t("entries")} </p>
             </div>
             <PaginationNav1
-                // gotoPage={setCurrentPage}
-                // canPreviousPage={currentPage > 0}
-                // canNextPage={currentPage < total_page - 1}
-                // pageCount={total_page}
-                // pageIndex={currentPage}
+                gotoPage={setCurrentPage}
+                canPreviousPage={currentPage > 0}
+                canNextPage={currentPage < total_page - 1}
+                pageCount={total_page}
+                pageIndex={currentPage}
             />
         </div>
     );

@@ -7,6 +7,7 @@ import { getContentHistory } from "../../../redux/contentHistoryReducer";
 
 import HistoryToolbar from "../HistoryToolbar";
 import HistoryTablePagination from "../HistoryTablePagination";
+import HistoryTableItem from "../HistoryTableItem";
 
 function HistoryTable() {
     const { t } = useTranslation();
@@ -88,11 +89,11 @@ function HistoryTable() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {/* {
+                                {
                                     contentHistory && contentHistory.length > 0 ? contentHistory.map((data, index) =>
                                         <HistoryTableItem key={data._id} data={data} condition={condition} pos={index} last={contentHistory.length === index + 1} />
                                     ) : <></>
-                                } */}
+                                }
                             </tbody>
                         </table>
                         {
@@ -142,7 +143,7 @@ function HistoryTable() {
                     </div>
                 </div>
             </div>
-            {/* <HistoryTablePagination /> */}
+            <HistoryTablePagination setCondition={setHandleCondition} getData={getHistoryData} condition={condition} />
         </div>
     );
 }

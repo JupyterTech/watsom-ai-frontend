@@ -206,5 +206,8 @@
     "back_to": "Back to Homepage",
     "history": "History",
     "date_created": "Date Created",
-    "content_type": "Content Type"
+    "content_type": "Content Type",
+    "output_count": "Output Count",
+    "word_usage": "Word Usage",
+    "created_at": "Created At"
 }
