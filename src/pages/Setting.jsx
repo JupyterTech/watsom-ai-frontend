@@ -102,7 +102,7 @@ function Setting() {
         </div>
 
         <div className='flex justify-center min-h-screen pt-[30px] px-[40px]'>
-            <div className="w-3/5">
+            <div className="min-w-3/5">
                 <div className="grow">
                     {/* Panel body */}
                     <div className="p-6 space-y-6">
