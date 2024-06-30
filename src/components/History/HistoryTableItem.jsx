@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux'
-import { Tooltip, Modal, } from "flowbite-react"
-import { HiDotsHorizontal, HiOutlineOfficeBuilding, HiOutlineMail, HiOutlinePhone, HiOutlineTrash } from "react-icons/hi";
-import { MdOutlineLocationOn } from "react-icons/md";
+import { Modal, Textarea } from "flowbite-react"
 import { openSnackBar } from '../../redux/snackBarReducer';
 import swal from 'sweetalert2';
 import date from 'date-and-time';
 import { useTranslation } from "react-i18next";
+import { TextareaAutosize } from "@material-ui/core";
 
 function HistoryTableItem(props) {
     const { t } = useTranslation();
@@ -20,13 +19,9 @@ function HistoryTableItem(props) {
     useEffect(() => {
         
     }, [])
-
-    const clickDelete = () => {
-
-    }
-
+    
     const output_tone = [t("tone_convincing"), t("tone_friendly"),t("tone_bold"),t("tone_professional"),t("tone_casual"),t("tone_luxury"),t("tone_witty"),t("tone_adventurous"),t("tone_persuasive"),t("tone_empathetic")];
-    const { service_type, tone, output_count, total_word_usage, language, created_at } = props.data;
+    const { service_type, tone, output_count, total_word_usage, language, created_at, contents } = props.data;
 
     return (
         <>
@@ -70,18 +65,29 @@ function HistoryTableItem(props) {
             </tr>
             <Modal
                 show={modalShow}
-                size="3xl"
+                size="5xl"
                 popup={true}
                 onClose={() => setModalShow(false)}
             >
                 <Modal.Header className="px-5 py-4">
-                    {t("user_info")}
+                    {t("contents")}
                 </Modal.Header>
                 <hr />
                 <Modal.Body>
-                    <div className="py-6 text-sitetx-200">
-                        <div className="grid grid-cols-5 gap-4">
-                            
+                    <div className="py-6 text-sitetx-200 max-h-[720px]">
+                        <div className='bg-white' style={{textAlign: "-webkit-center"}}>
+                            {
+                                contents && contents.length > 0 && contents.map((data, index)=>
+                                <div className='w-4/5 py-4' key={index}>
+                                    <Textarea 
+                                        rows={5}
+                                        className='w-full focus:bg-gray-100'
+                                        value={data.content}
+                                        readOnly
+                                    />
+                                </div>
+                                )
+                            }
                         </div>
                     </div>
                 </Modal.Body>
@@ -89,7 +95,6 @@ function HistoryTableItem(props) {
                 <Modal.Footer>
                     <div className="flex items-center justify-end" style={{width:'100%'}}>
                         <div className="col-span-5 flex pl-12 gap-8">
-                            
                         </div>
 
                     </div>

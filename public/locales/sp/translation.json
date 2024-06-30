@@ -209,5 +209,6 @@
     "content_type": "Tipo de contenido",
     "output_count": "Recuento de salidas",
     "word_usage": "Uso de palabras",
-    "created_at": "Creado en"
+    "created_at": "Creado en",
+    "contents": "Contenido"
 }
