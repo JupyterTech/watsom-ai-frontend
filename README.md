@@ -1,36 +1,51 @@
-# Watsom.ai
+# Watsom AI
 
-## Feature
-- YouTube Descriptions
-- YouTube Intros
-- YouTube Titles
+Watsom is a content creation tool that allows you to quickly and easily create content using multiple LLM (Large Language Models). This project leverages React and Tailwind CSS to provide a seamless and intuitive user experience.
 
-- Facebook Ads
-- Instagram Ads
-- Google Ad Titles
-- Google Ad Descriptions
-- Google Ads
+## Features
 
-- SEO Title and Meta Descriptions (Home Page)
-- SEO Title and Meta Descriptions (Product Page)
-- SEO Title and Meta Descriptions (Blog Page)
-- SEO Title and Meta Descriptions (Services Page)
-- Blog Ideas
-- Blog Intro
-- Blog Outlines
-- Blog Title
-- Blog Post Conclusion Paragraph
-- Keyword Generator
-- Product Descriptions
-- Product Review Generator
+- **YouTube Content:**
+  - Descriptions
+  - Intros
+  - Titles
 
-- Amazon Sponsored Brands Ad Headline
-- Amazon Product Features
-- Amazon Product Titles
-- Amazon Product Descriptions
+- **Social Media Ads:**
+  - Facebook Ads
+  - Instagram Ads
 
-- Creative Writing
-- Content Improver
+- **Google Ads:**
+  - Ad Titles
+  - Ad Descriptions
+  - Complete Ads
+
+- **SEO Optimization:**
+  - Title and Meta Descriptions for Home Page
+  - Title and Meta Descriptions for Product Page
+  - Title and Meta Descriptions for Blog Page
+  - Title and Meta Descriptions for Services Page
+
+- **Blog Content:**
+  - Blog Ideas
+  - Blog Intro
+  - Blog Outlines
+  - Blog Titles
+  - Blog Post Conclusion Paragraph
+
+- **Keyword Generation:**
+  - Keyword Generator
+
+- **Product Descriptions:**
+  - Product Descriptions
+  - Product Review Generator
+
+- **Amazon Specific:**
+  - Sponsored Brands Ad Headline
+  - Product Features
+  - Product Titles
+  - Product Descriptions
+
+- **Creative Writing:**
+  - Content Improver
 
 ![image](https://github.com/apollo812/Watsom.ai/assets/112562504/10e22947-3537-4eec-ba96-165c7b35ad98)
 
