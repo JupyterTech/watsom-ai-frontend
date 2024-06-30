@@ -115,6 +115,15 @@ function DropdownProfile({
                 <li>
                   <Link
                     className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
+                    to="/history"
+                    onClick={() => setDropdownOpen(!dropdownOpen)}
+                  >
+                    {t("history")}
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                     to="/setting"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                   >
