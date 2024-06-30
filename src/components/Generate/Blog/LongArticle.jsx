@@ -6,11 +6,13 @@ import ToneSelect from '../ToneSelect';
 import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom'
+import { saveContentHistory } from '../../../redux/contentHistoryReducer';
 
 import { generateOutline, generateOneOutline } from '../../../redux/template/blog';
 import { getAvailable } from '../../../redux/authReducer';
 import { setLoading } from '../../../redux/globalReducer';
 import { updateToken } from '../../../redux/authReducer';
+import { getWordsCount } from '../../../utils';
 
 function LongArticle({
   func_SetTitle, func_SetKeywords, func_SetTone, func_SetFirstOutline, func_setOutline

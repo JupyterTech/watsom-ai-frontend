@@ -13,16 +13,16 @@ import { PLAN_ESSENTIAL, PLAN_PRO_MONTH, PLAN_PRO_YEAR, SECRET_KEY } from '../co
 import PayPalBtnCosmetic from './Paypal/PaypalButton_Cosmetic';
 
 function PlanCard({plan}) {
-  const { authState } = useSelector((state) => state);
-  const { t } = useTranslation();
+	const { authState } = useSelector((state) => state);
+	const { t } = useTranslation();
 	const dispatch = useDispatch();
-  const navigate = useNavigate();
+  	const navigate = useNavigate();
 	
 	const plan_essential = PLAN_ESSENTIAL;
 	const plan_pro_month = PLAN_PRO_MONTH;
 	const plan_pro_year = PLAN_PRO_YEAR;
 
-  	const { userToken, loggedIn } = authState;
+  	const { userToken, loggedIn, userInfo } = authState;
   	const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
 	const plan_cost = [ 0, 9, 49, 348 ]
 	const plan_period = [t("month"), t("month"), t("month"), t("year")]
@@ -42,7 +42,8 @@ function PlanCard({plan}) {
 
 	const paypalSubscribe = (data, actions) => {
 		return actions.subscription.create({
-				'plan_id': plan_id[plan]
+				'plan_id': plan_id[plan],
+				'custom_id': userInfo.email
 		});
 	};
 
@@ -54,8 +55,9 @@ function PlanCard({plan}) {
 			// call the backend api to store transaction details
 			console.log("Payapl approved")
 			console.log(data.subscriptionID)
+			console.log(data)
 
-			let res = await dispatch(upgradePlan(userToken + "%%" + plan))
+			let res = await dispatch(upgradePlan(userToken + "%%" + plan + "%%" + data.subscriptionID))
 			if(res.status != false){
         dispatch(openSnackBar({ status: "success", message: t("upgrade_plan_success") }))
         navigate("/template")
