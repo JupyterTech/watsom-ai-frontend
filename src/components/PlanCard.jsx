@@ -22,8 +22,8 @@ function PlanCard({plan}) {
 	const plan_pro_month = PLAN_PRO_MONTH;
 	const plan_pro_year = PLAN_PRO_YEAR;
 
-  const { userToken, loggedIn } = authState;
-  const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
+  	const { userToken, loggedIn } = authState;
+  	const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
 	const plan_cost = [ 0, 9, 49, 348 ]
 	const plan_period = [t("month"), t("month"), t("month"), t("year")]
 
