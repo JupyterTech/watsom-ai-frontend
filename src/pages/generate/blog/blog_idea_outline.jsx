@@ -10,16 +10,19 @@ import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { generateBlogIdeaOutline } from '../../../redux/template/blog';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
+import { saveContentHistory } from '../../../redux/contentHistoryReducer';
 
 import { customizeBlogIntroParagraph } from '../../../utils';
 
 import { updateToken } from '../../../redux/authReducer';
+import { getWordsCount } from '../../../utils';
 
 export default function BlogIdeaOutlinePage() {
   const { globalState, authState } = useSelector((state) => state);
   const { loading } = globalState;
-  const { userToken } = authState;
+  const { userToken, userInfo } = authState;
   const { t } = useTranslation();
+
 
   const [title, setTitle] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -67,6 +70,28 @@ export default function BlogIdeaOutlinePage() {
             setResult(res.result)
             dispatch(updateToken(res.token))
             // console.log(res.token)
+
+            let customized_result = []
+            let total_word_usage = 0
+            res.result.map(content => {
+              customized_result.push({content, word_usage: getWordsCount(content)})
+              total_word_usage += getWordsCount(content)
+            })
+
+            const saveContentData = {
+              created_by: userInfo?.id,
+              service_type: type,
+              first_field: title,
+              second_field: keywords,
+              third_field: "",
+              tone: tone,
+              language: lang,
+              output_count: count,
+              contents: customized_result,
+              total_word_usage
+            }
+
+            dispatch(saveContentHistory(saveContentData))
           }
 
           let tmp_content = customizeBlogIntroParagraph(res.result[0]);

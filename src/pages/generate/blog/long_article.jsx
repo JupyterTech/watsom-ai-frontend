@@ -10,15 +10,18 @@ import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { generateLongArticle } from '../../../redux/template/blog';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
+import { saveContentHistory } from '../../../redux/contentHistoryReducer';
 
 import { updateToken } from '../../../redux/authReducer';
+import { getWordsCount } from '../../../utils';
 
 export default function LongArticlePage() {
   const { blogState, globalState, authState } = useSelector((state) => state);
   const { generateLongArticleState } = blogState;
   const { loading } = globalState;
-  const { userToken } = authState;
+  const { userToken, userInfo } = authState;
   const { t } = useTranslation();
+
 
   const [title, setTitle] = useState("");
   const [keywords, setKeywords] = useState("");
@@ -109,6 +112,24 @@ export default function LongArticlePage() {
 
           dispatch(setCurrentDocument(content))
           dispatch(updateToken(token))
+
+          let customized_result = {content: content.replace(/#/g, ""), word_usage: getWordsCount(content.replace(/#/g, "")) }
+          let total_word_usage = getWordsCount(content.replace(/#/g, ""))
+
+          const saveContentData = {
+            created_by: userInfo?.id,
+            service_type: type,
+            first_field: title,
+            second_field: keywords,
+            third_field: "",
+            tone: tone,
+            language: lang,
+            output_count: count,
+            contents: customized_result,
+            total_word_usage
+          }
+
+          dispatch(saveContentHistory(saveContentData))
         }
       }
     }

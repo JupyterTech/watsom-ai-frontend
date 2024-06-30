@@ -11,8 +11,10 @@ import { useTranslation } from "react-i18next";
 import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { setLoading } from '../../../redux/globalReducer';
+import { saveContentHistory } from '../../../redux/contentHistoryReducer';
 
 import { updateToken } from '../../../redux/authReducer';
+import { getWordsCount } from '../../../utils';
 
 export default function ParaphrasingRewriteQuillbotPage() {
   const { blogState, globalState, authState } = useSelector((state) => state);
@@ -21,7 +23,7 @@ export default function ParaphrasingRewriteQuillbotPage() {
 
   const { paraphrasingRewriteQuillbotState } = blogState;
   const { loading } = globalState;
-  const { userToken } = authState;
+  const { userToken, userInfo } = authState;
 
   const [contents, setContents] = useState("")
   const [tone, setTone] = useState(0);
@@ -66,6 +68,28 @@ export default function ParaphrasingRewriteQuillbotPage() {
             setResult(res.result)
             dispatch(updateToken(res.token))
             // console.log(res.token)
+
+            let customized_result = []
+            let total_word_usage = 0
+            res.result.map(content => {
+              customized_result.push({content, word_usage: getWordsCount(content)})
+              total_word_usage += getWordsCount(content)
+            })
+
+            const saveContentData = {
+              created_by: userInfo?.id,
+              service_type: type,
+              first_field: contents,
+              second_field: "",
+              third_field: "",
+              tone: tone,
+              language: lang,
+              output_count: count,
+              contents: customized_result,
+              total_word_usage
+            }
+
+            dispatch(saveContentHistory(saveContentData))
           }
         }else{
           dispatch(setLoading(false));

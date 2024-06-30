@@ -10,14 +10,18 @@ import { openSnackBar } from '../../../redux/snackBarReducer';
 import { useDispatch, useSelector } from "react-redux";
 import { generateGoogleBusinessPost } from '../../../redux/template/social_media';
 import { setLoading, setCurrentDocument } from '../../../redux/globalReducer';
+import { saveContentHistory } from '../../../redux/contentHistoryReducer';
 
 import { updateToken } from '../../../redux/authReducer';
+import { getWordsCount } from '../../../utils';
 
 export default function GoogleBusinessPostPage() {
   const { globalState, authState } = useSelector((state) => state);
   const { loading } = globalState;
-  const { userToken } = authState;
+  const { userToken, userInfo } = authState;
   const { t } = useTranslation();
+
+  const output_post_type = [t("post_event"), t("post_offer"),t("post_update")];
 
   const [keywords, setKeywords] = useState("");
   const [tone, setTone] = useState(0);
@@ -62,6 +66,28 @@ export default function GoogleBusinessPostPage() {
             setResult(res.result)
             dispatch(updateToken(res.token))
             // console.log(res.token)
+
+            let customized_result = []
+            let total_word_usage = 0
+            res.result.map(content => {
+              customized_result.push({content, word_usage: getWordsCount(content)})
+              total_word_usage += getWordsCount(content)
+            })
+
+            const saveContentData = {
+              created_by: userInfo?.id,
+              service_type: type,
+              first_field: output_post_type[post_type],
+              second_field: keywords,
+              third_field: "",
+              tone: tone,
+              language: lang,
+              output_count: count,
+              contents: customized_result,
+              total_word_usage
+            }
+
+            dispatch(saveContentHistory(saveContentData))
           }
         }else{
           dispatch(setLoading(false));
