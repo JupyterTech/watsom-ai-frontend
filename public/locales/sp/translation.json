@@ -52,6 +52,7 @@
     "open_sidebar": "Abrir barra lateral",
     "free_plan": "Plan gratuito",
     "search_template": "Busca la plantilla que estás buscando",
+    "search_history": "Buscar en el historial",
     "sign_out": "Cerrar sesión",
     "sign_in": "Iniciar sesión",
     "sign_up": "Registrarse",
@@ -203,5 +204,7 @@
     "something_missing": "Algo falta.",
     "cant_find_page": "Lo sentimos, no podemos encontrar esa página. Encontrarás mucho para explorar en la página de inicio.",
     "back_to": "Volver a la página de inicio",
-    "history": "Historia"
+    "history": "Historia",
+    "date_created": "Fecha de creación",
+    "content_type": "Tipo de contenido"
 }

@@ -12,6 +12,7 @@ import SetPassword from './pages/auth/SetPassword';
 
 import SubScription from './pages/SubScription';
 import Setting from './pages/Setting';
+import History from './pages/history';
 
 import LongArticlePage from './pages/generate/blog/long_article'
 import ContentImproverPage from './pages/generate/blog/content_improver';
@@ -73,6 +74,7 @@ function App() {
 
         <Route path = "/subscription" element = {<SubScription/>} />
         <Route path = "/setting" element = {<Setting/>} />
+        <Route path = "/history" element = {<History/>} />
 
         <Route path = "/template" element = {<Template/>} />
         <Route path = "/template/long_article" element = {<LongArticlePage/>} />
