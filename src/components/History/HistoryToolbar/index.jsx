@@ -6,7 +6,7 @@ import PerPageCountSelect from "./PerPageCountSelect";
 import SortbySelect from "./SortbySelect";
 import FilterInput from "./FilterInput";
 
-function HistoryToolbar(props) {
+function HistoryToolbar({setCondition, getData, condition}) {
     const { t } = useTranslation();
     const { authState, globalState } = useSelector((state) => state);
     const { userInfo } = authState;
@@ -17,9 +17,9 @@ function HistoryToolbar(props) {
 
     return (
         <div className="flex gap-8 justify-end py-4">
-            <FilterInput />
-            <PerPageCountSelect />
-            <SortbySelect />
+            <FilterInput setCondition={setCondition} getData={getData} condition={condition} />
+            <PerPageCountSelect setCondition={setCondition} getData={getData} condition={condition} />
+            <SortbySelect setCondition={setCondition} getData={getData} condition={condition} />
         </div>
     );
 }

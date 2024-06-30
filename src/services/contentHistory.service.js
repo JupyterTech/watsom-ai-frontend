@@ -16,6 +16,22 @@ const saveContentHistory = async (data) => {
     return await handleResponse(response);
 }
 
+const getContentHistory = async (filter) => {
+    const requestOptions = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, OPTIONS'
+        },
+        body: JSON.stringify(filter)
+    };
+
+    const response = fetch(`${API_BASE}/content_history/gethistory`, requestOptions);
+    return await handleResponse(response);
+}
+
 export const contentHistoryService = {
     saveContentHistory,
+    getContentHistory
 }

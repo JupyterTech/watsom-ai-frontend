@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from 'react-redux';
 
+import { setHistoryCondition } from "../../../redux/contentHistoryReducer";
+import { getContentHistory } from "../../../redux/contentHistoryReducer";
+
 import HistoryToolbar from "../HistoryToolbar";
 import HistoryTablePagination from "../HistoryTablePagination";
 
 function HistoryTable() {
     const { t } = useTranslation();
-    const { authState, globalState } = useSelector((state) => state);
+    const { authState, contentHistoryState } = useSelector((state) => state);
     const { userInfo } = authState;
+    const { contentHistory } = contentHistoryState;
 
     const dispatch = useDispatch();
 
@@ -21,15 +25,31 @@ function HistoryTable() {
     });
 
     useEffect(() => {
-        
+        dispatch(getContentHistory(condition));
+        dispatch(setHistoryCondition({ ...condition }));
     }, [])
 
+    useEffect(() => {
+        setCondition({ ...contentHistoryState.condition });
+    }, [contentHistoryState.condition])
+
+    const setHandleCondition = (key, value) => {
+        condition[`${key}`] = value;
+        setCondition({ ...condition });
+
+        dispatch(setHistoryCondition({ ...condition }));
+    }
+
+    function getHistoryData() {//filter
+        dispatch(getContentHistory(condition))
+    }
+    
     return (
         <div className="history-layout">
             <div className="table-scroll-container">
                 <div className="table-container">
                     
-                    <HistoryToolbar />
+                    <HistoryToolbar setCondition={setHandleCondition} getData={getHistoryData} condition={condition} />
 
                     <div className="history-table">
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -69,14 +89,14 @@ function HistoryTable() {
                             </thead>
                             <tbody>
                                 {/* {
-                                    usersByFilter && usersByFilter.length > 0 ? usersByFilter.map((data, index) =>
-                                        <HistoryTableItem key={data._id} data={data} condition={condition} pos={index} last={usersByFilter.length === index + 1} />
+                                    contentHistory && contentHistory.length > 0 ? contentHistory.map((data, index) =>
+                                        <HistoryTableItem key={data._id} data={data} condition={condition} pos={index} last={contentHistory.length === index + 1} />
                                     ) : <></>
                                 } */}
                             </tbody>
                         </table>
-                        {/* {
-                            usersByFilter && usersByFilter.length > 0 ?<></>:<div className="text-gray-500 pb-5" style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', marginTop:'30px', fontFamily:'Inter', fontWeight:'500', fontSize:'20px'}}> 
+                        {
+                            contentHistory && contentHistory.length > 0 ?<></>:<div className="text-gray-500 pb-5" style={{width:'100%', display:'flex', justifyContent:'center', alignItems:'center', marginTop:'30px', fontFamily:'Inter', fontWeight:'500', fontSize:'20px'}}> 
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 100 100" style={{height:'10rem'}} className=" mr-1">
 
@@ -118,11 +138,11 @@ function HistoryTable() {
                                 {t("nodata")}
                             </div>
                         </div>
-                        } */}
+                        }
                     </div>
                 </div>
             </div>
-            <HistoryTablePagination />
+            {/* <HistoryTablePagination /> */}
         </div>
     );
 }

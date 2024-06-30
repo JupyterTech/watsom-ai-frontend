@@ -115,6 +115,7 @@ export default function LongArticlePage() {
 
           let customized_result = {content: content.replace(/#/g, ""), word_usage: getWordsCount(content.replace(/#/g, "")) }
           let total_word_usage = getWordsCount(content.replace(/#/g, ""))
+          let search_field = content.replace(/#/g, "")
 
           const saveContentData = {
             created_by: userInfo?.id,
@@ -126,7 +127,8 @@ export default function LongArticlePage() {
             language: lang,
             output_count: count,
             contents: customized_result,
-            total_word_usage
+            total_word_usage,
+            search_field
           }
 
           dispatch(saveContentHistory(saveContentData))

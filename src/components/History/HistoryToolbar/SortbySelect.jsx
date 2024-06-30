@@ -1,17 +1,20 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 
-function SortbySelect({
-  selectSortby
-}) {
+function SortbySelect({setCondition, getData, condition}) {
   const { t } = useTranslation();
 
   const [showSortby, setShowSortby] = useState(0);
   const sortby = [t("date_created"), t("content_type"), t("language")]
   
+  const default_sort = ["Date Created", "Content Type", "Language"]
+
   const changeSelect = (index) => {
     setShowSortby(index);
-    selectSortby(index);
+
+    setCondition("sortby", default_sort[index]);
+    setCondition("currentPage", 0);
+    getData();
   }
 
   return (

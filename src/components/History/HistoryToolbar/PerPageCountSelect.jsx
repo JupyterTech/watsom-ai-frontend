@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useTranslation } from "react-i18next";
 
-function PerPageCountSelect({
-  selectPerPageCount
-}) {
+function PerPageCountSelect({setCondition, getData, condition}) {
   const { t } = useTranslation();
 
   const [showPerPageCount, setShowPerPageCount] = useState(0);
@@ -11,7 +9,10 @@ function PerPageCountSelect({
   
   const changeSelect = (index) => {
     setShowPerPageCount(index);
-    selectPerPageCount(index);
+
+    setCondition("showCount", perpage_count[index]);
+    setCondition("currentPage", 0);
+    getData();
   }
 
   return (

@@ -70,9 +70,11 @@ export default function FacebookAdsPage() {
 
             let customized_result = []
             let total_word_usage = 0
+            let search_field = ""
             res.result.map(content => {
               customized_result.push({content, word_usage: getWordsCount(content)})
               total_word_usage += getWordsCount(content)
+              search_field += content + " "
             })
 
             const saveContentData = {
@@ -85,7 +87,8 @@ export default function FacebookAdsPage() {
               language: lang,
               output_count: count,
               contents: customized_result,
-              total_word_usage
+              total_word_usage,
+              search_field
             }
 
             dispatch(saveContentHistory(saveContentData))
