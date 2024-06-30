@@ -10,6 +10,7 @@ import { openSnackBar } from '../redux/snackBarReducer';
 import { useNavigate } from 'react-router-dom'
 
 import { PLAN_ESSENTIAL, PLAN_PRO_MONTH, PLAN_PRO_YEAR, SECRET_KEY } from '../config/constants';
+import PayPalBtnCosmetic from './Paypal/PaypalButton_Cosmetic';
 
 function PlanCard({plan}) {
   const { authState } = useSelector((state) => state);
@@ -21,8 +22,8 @@ function PlanCard({plan}) {
 	const plan_pro_month = PLAN_PRO_MONTH;
 	const plan_pro_year = PLAN_PRO_YEAR;
 
-  const { userToken, loggedIn } = authState;
-  const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
+  	const { userToken, loggedIn } = authState;
+  	const plan_list = [t("free_trial"), t("essential"), t("pro_month"), t("pro_year")]
 	const plan_cost = [ 0, 9, 49, 348 ]
 	const plan_period = [t("month"), t("month"), t("month"), t("year")]
 
@@ -40,9 +41,9 @@ function PlanCard({plan}) {
 	const plan_id = ["Free", plan_essential, plan_pro_month, plan_pro_year]
 
 	const paypalSubscribe = (data, actions) => {
-			return actions.subscription.create({
-					'plan_id': plan_id[plan]
-			});
+		return actions.subscription.create({
+				'plan_id': plan_id[plan]
+		});
 	};
 
 	const paypalOnError = (err) => {
@@ -63,8 +64,8 @@ function PlanCard({plan}) {
       }
 	};
 
-  return (
-    <Card>
+  	return (
+    	<Card>
 			<h5 className="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">
 				{plan_list[plan]}
 			</h5>
@@ -144,7 +145,7 @@ function PlanCard({plan}) {
 			</ul>
 			{/* <PayPalButton type="subscription" /> */}
 			{
-				loggedIn == true &&
+				loggedIn == true ?
 				<PayPalBtn
 					amount = {plan_cost[plan]}
 					currency = "USD"
@@ -153,7 +154,8 @@ function PlanCard({plan}) {
 					catchError={paypalOnError}
 					onError={paypalOnError}
 					onCancel={paypalOnError}
-				/>
+				/> :
+				<PayPalBtnCosmetic />
 			}
 			{/* <button
 				type="button"
@@ -162,7 +164,7 @@ function PlanCard({plan}) {
 				{t("choose_plan")}
 			</button> */}
 		</Card>
-  );
+  	);
 }
 
 export default PlanCard;

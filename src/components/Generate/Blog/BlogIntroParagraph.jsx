@@ -58,16 +58,17 @@ function BlogIntroParagraph({
   }
 
   return (
-    <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100" style={{height: " calc(100vh - 10rem) "}}>
+    <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100" style={{height: " calc(100vh - 12rem) "}}>
       <div className="pb-8">
         <div style={{textAlign: "-webkit-center"}}>
-          <div className='w-2/3 text-start'>
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+          <div className='w-4/5 text-start py-2'>
+            <div>
+              <div className='font-bold py-2'>
                 {t("blog_title_topic")}
               </div>
-              <div className='col-span-9'>
-                <TextInput 
+              <div>
+                <Textarea 
+                  rows={1}
                   value={title}
                   onChange={(e) => changeTitle(e.target.value)}
                 />
@@ -77,23 +78,24 @@ function BlogIntroParagraph({
               </div>
             </div>
 
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+            <div >
+              <div className='font-bold py-2'>
                 {t("audience")}
               </div>
-              <div className='col-span-9'>
-                <TextInput 
+              <div>
+                <Textarea 
+                  rows={1}
                   value={keywords}
                   onChange={(e) => changeKeywords(e.target.value)}
                 />
               </div>
             </div>
             
-            <div className='grid grid-cols-12 py-4'>
-              <div className='col-span-3'>
+            <div >
+              <div className='font-bold py-2'>
                 {t("tone")}
               </div>
-              <div className='col-span-9'>
+              <div>
                 <ToneSelect 
                   selectTone = {selectTone}
                 />

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Watsom.ai",
+  "name": "Watsom is a content generation tool that makes it quick and easy to generate content using GPT3.",
   "icons": [
     {
       "src": "logo.png",

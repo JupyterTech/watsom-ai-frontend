@@ -16,6 +16,7 @@ import Search from "search-json"
 import { templateData } from '../Template/TemplateData';
 
 import { setExpandGroup } from '../../redux/globalReducer';
+import LogoTextDark from '../../images/logo-text-dark.png';
 
 function Sidebar({
   sidebarOpen,
@@ -108,15 +109,14 @@ function Sidebar({
           sidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         aria-hidden="true"
-      ></div> */}
+     > */}
 
       {/* Sidebar */}
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-full lg:w-full lg:sidebar-expanded:!w-full 2xl:!w-full shrink-0 bg-slate-800 p-4 transition-all duration-200 ease-in-out ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-64'
-        }`}
+        className="bg-black h-screen p-4 z-40"
+        // className={`bg-black flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen overflow-y-scroll lg:overflow-y-auto no-scrollbar w-full lg:w-full lg:sidebar-expanded:!w-full 2xl:!w-full shrink-0 p-4 transition-all duration-200 ease-in-out`}
       >
         {/* Sidebar header */}
         <div className="flex justify-between mb-10 pr-3 sm:px-2">
@@ -136,7 +136,8 @@ function Sidebar({
           {/* Logo */}
           <div className="flex gap-20">
             <NavLink end to="/" className="flex col-span-10">
-              <div className='text-white self-center font-bold text-2xl'>WatSom.ai</div>
+              <img className="object-cover object-center h-10" src={LogoTextDark} alt="Authentication" />
+              {/* <div className='text-white self-center font-bold text-2xl'>WatSom.ai</div> */}
             </NavLink>
             <UserMenu align="right" removeText={true} />
           </div>
@@ -184,7 +185,7 @@ function Sidebar({
                   }`}
                 >
                   <div className="flex items-center">
-                    <span className="text-md font-medium ml-3">{t("template")}</span>
+                    <span className="text-md font-medium ml-3">{t("templates")}</span>
                   </div>
                 </NavLink>
               </li>

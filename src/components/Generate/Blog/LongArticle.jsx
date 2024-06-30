@@ -260,7 +260,7 @@ function LongArticle({
 
   return (
     <>
-      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100" style={{height: " calc(100vh - 10rem) "}}>
+      <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden bg-gray-100" style={{height: " calc(100vh - 12rem) "}}>
         <div>
           <div>
             <div className='text-center px-4 py-8'>
@@ -273,13 +273,14 @@ function LongArticle({
             </div>
 
             <div style={{textAlign: "-webkit-center"}}>
-              <div className='w-2/3 text-start'>
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+              <div className='w-4/5 text-start py-2'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("blog_title_topic")}
                   </div>
-                  <div className='col-span-9'>
-                    <TextInput 
+                  <div>
+                    <Textarea 
+                      rows={1} 
                       value={title}
                       onChange={(e) => changeTitle(e.target.value)}
                     />
@@ -289,12 +290,13 @@ function LongArticle({
                   </div>
                 </div>
 
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("keywords")}
                   </div>
-                  <div className='col-span-9'>
-                    <TextInput 
+                  <div>
+                    <Textarea 
+                      rows={1}  
                       value={keywords}
                       onChange={(e) => changeKeywords(e.target.value)}
                     />
@@ -304,11 +306,11 @@ function LongArticle({
                   </div>
                 </div>
                 
-                <div className='grid grid-cols-12 pb-4'>
-                  <div className='col-span-3'>
+                <div >
+                  <div className='font-bold py-2'>
                     {t("tone")}
                   </div>
-                  <div className='col-span-9'>
+                  <div>
                     <ToneSelect 
                       selectTone = {selectTone}
                     />
@@ -337,7 +339,7 @@ function LongArticle({
               
               <div style={{textAlign: "-webkit-center"}}>
                 {/* intro cosmetic */}
-                <div className='w-2/3 text-start py-2'>
+                <div className='w-4/5 text-start py-2'>
                   <div className='border-dotted p-2 border-gray-400 border-2 text-gray-400'>
                     {t("blog_intro_will_added")}
                   </div>
@@ -346,7 +348,7 @@ function LongArticle({
                 {/* outline list */}
                 {
                   outline.length > 0 && outline.map((data,index) => data &&
-                    <div key={index} className='w-2/3 grid grid-cols-12 py-2'>
+                    <div key={index} className='w-4/5 grid grid-cols-12 py-2'>
                       <div className='col-span-11'>
                         <Textarea
                           className='bg-white'
@@ -367,7 +369,7 @@ function LongArticle({
                 }
 
                 {/* outline first */}
-                {/* <div className='w-2/3 grid grid-cols-12 py-2'>
+                {/* <div className='w-4/5 grid grid-cols-12 py-2'>
                   <div className='col-span-11'>
                     <TextInput
                       sizing="lg"
@@ -383,7 +385,7 @@ function LongArticle({
                   </div>
                 </div> */}
 
-                <div className='flex justify-between w-2/3 py-2'>
+                <div className='flex justify-between w-4/5 py-2'>
                   <div 
                     onClick={()=>newOutline()}
                     className='underline text-site_light-100 self-center cursor-pointer hover:text-blue-800'
@@ -402,7 +404,7 @@ function LongArticle({
                   </div>
                 </div>
 
-                <div className='w-2/3 text-start py-2'>
+                <div className='w-4/5 text-start py-2'>
                   <div className='border-dotted p-2 border-gray-400 border-2 text-gray-400'>
                     {t("blog_intro_will_added")}
                   </div>

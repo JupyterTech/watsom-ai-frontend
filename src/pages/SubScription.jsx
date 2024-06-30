@@ -13,14 +13,14 @@ function SubScription() {
 
   return (
     <div>
-        <Header />
+        <Header isLogo={true} />
 
         <div className='h-6 bg-site_light-100 text-white text-center text-sm font-bold w-full'>
             {t("future")} of WatSom 🎉
         </div>
 
         <div className='flex justify-center min-h-screen pt-[30px] px-[40px]'>
-            <div className="w-3/5">
+            <div className="max-w-3/5">
                 <p className="text-[#00153B] text-[20px] leading-[40px] font-semibold">
                     {t("your_subscription")}
                 </p>

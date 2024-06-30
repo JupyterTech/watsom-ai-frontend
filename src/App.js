@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { Routes, Route,  Navigate } from 'react-router-dom';
 import Template from './pages/template';
 
+import NotFound from './pages/NotFound';
+
 import Signin from './pages/auth/Signin'
 import Signup from './pages/auth/Signup'
 import ResetPassword from './pages/auth/ResetPassword';
 import ConfirmMail from './pages/auth/Confirm';
 import SetPassword from './pages/auth/SetPassword';
+
 import SubScription from './pages/SubScription';
+import Setting from './pages/Setting';
 
 import LongArticlePage from './pages/generate/blog/long_article'
 import ContentImproverPage from './pages/generate/blog/content_improver';
@@ -58,6 +62,7 @@ function App() {
         loggedIn && !userInfo?.is_verified && <VerifyWarning />
       }
       <Routes>
+        <Route path='*' element={<NotFound />}/>
         <Route path = "/" element ={<Navigate to = "/template"/>} />
 
         <Route path = "/signin" element = {<Signin/>} />
@@ -65,7 +70,9 @@ function App() {
         <Route path = "/reset-password" element = {<ResetPassword/>} />
         <Route path = "/confirm/:confirm_token" element = {<ConfirmMail/>} />
         <Route path = "/reset_password/:confirm_token" element = {<SetPassword/>} />
+
         <Route path = "/subscription" element = {<SubScription/>} />
+        <Route path = "/setting" element = {<Setting/>} />
 
         <Route path = "/template" element = {<Template/>} />
         <Route path = "/template/long_article" element = {<LongArticlePage/>} />
