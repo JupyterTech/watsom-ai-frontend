@@ -1,5 +1,5 @@
 import  { authHeader, handleResponse } from '../utils';
-import { GPT_SERVER } from '../config/constants';
+import { API_BASE } from '../config/constants';
 
 const saveContentHistory = async (data) => {
     const requestOptions = {
@@ -12,7 +12,7 @@ const saveContentHistory = async (data) => {
         body: JSON.stringify(data)
     };
 
-    const response = fetch(`${GPT_SERVER}/content_history/register`, requestOptions);
+    const response = fetch(`${API_BASE}/content_history/register`, requestOptions);
     return await handleResponse(response);
 }
 

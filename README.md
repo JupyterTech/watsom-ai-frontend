@@ -58,6 +58,4 @@ For the presentation of the dashboard, the design should be similar to that of t
 that is the presentation of the templates and the dashboard
 ![templates presentation](https://user-images.githubusercontent.com/112562504/218134275-a32a7373-6799-4e65-8358-2c7b4ca503f3.png)
 
-I will be in charge of making the home page, the blog landing pages.
-
 almost at the end of the project we will also have to integrate a membership system using paypal and recurring payments

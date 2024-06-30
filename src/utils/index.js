@@ -1,3 +1,5 @@
+import wordsCounter from 'word-counting'
+
 export const authHeader = () => {
     let user = JSON.parse(localStorage.getItem('user'));
 
@@ -42,4 +44,8 @@ export const customizeBlogIntroParagraph = (content) => {
     tmp_content = tmp_content.replace("5. ", "### 5. ")
 
     return tmp_content
+}
+
+export const getWordsCount = (content) => {
+    return wordsCounter(content).wordsCount
 }
