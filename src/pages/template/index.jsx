@@ -13,7 +13,7 @@ export default function Index() {
       <div>
 
         <div className='flex'>
-          <div className='w-[300px] absolute lg:relative'>
+          <div className='w-80 absolute lg:relative'>
             <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           </div>
           <div className='w-full'>

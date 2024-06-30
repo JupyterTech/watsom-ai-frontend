@@ -15,7 +15,7 @@ function WordsUsage({isMB}) {
   const progress = 100 - parseInt(userInfo?.available_words_count / available_words_count[userInfo?.plan] * 100);
 
   return (
-    <Card className={`${isMB && "mb-24"} fixed bottom-8 justify-end mt-auto cursor-default`} style={{width: "290px"}} >
+    <Card className={`${isMB && "mb-24"} fixed bottom-8 mt-auto cursor-default`} style={{width: "290px"}} >
       <div className='flex justify-between'>
         <h5 className="text-xl font-bold tracking-tight text-gray-900">
           {t("words_usage")}

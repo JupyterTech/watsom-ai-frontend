@@ -85,7 +85,7 @@ function Sidebar({
       <div
         id="sidebar"
         ref={sidebar}
-        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen lg:overflow-y-auto no-scrollbar w-64 lg:!w-full 2xl:!w-full shrink-0 bg-black p-4 transition-all duration-200 ease-in-out ${sssidebarOpen ? 'translate-x-0' : '-translate-x-64'
+        className={`flex flex-col absolute z-40 left-0 top-0 lg:static lg:left-auto lg:top-auto lg:translate-x-0 h-screen lg:overflow-y-auto no-scrollbar w-80 shrink-0 bg-black p-4 transition-all duration-200 ease-in-out ${sssidebarOpen ? 'translate-x-0' : '-translate-x-80'
           }`}
       >
 
@@ -170,12 +170,12 @@ function Sidebar({
               </li> */}
             </ul>
           </div>
+          {
+            userInfo?.plan < 2 &&
+            <WordsUsage isMB={false} />
+          }
         </div>
 
-        {
-          userInfo?.plan < 2 &&
-          <WordsUsage isMB={false} />
-        }
       </div>
     </div>
   );
